@@ -2,7 +2,12 @@ from abc import ABC, abstractmethod
 
 
 class Pessoa(ABC):
+    @abstractmethod
     def __init__(self, nome: str, cpf: str, data_nascimento: str, endereco: str):
+        self.__nome = None
+        self.__cpf = None
+        self.__data_nascimento = None
+        self.__endereco = None
         if isinstance(nome, str):
             self.__nome = nome
         if isinstance(cpf, str):

@@ -2,8 +2,12 @@ from pessoa import Pessoa
 
 
 class Adotante(Pessoa):
-    def __init__(self, tipo_habitacao: str, porte_habitacao: str, tem_animais: bool):
+    def __init__(self, tipo_habitacao: str, porte_habitacao: str, tem_animais: bool, 
+                 nome: str, cpf: str, data_nascimento: str, endereco: str):
         super().__init__(nome, cpf, data_nascimento, endereco)
+        self.__tipo_habitacao = None
+        self.__porte_habitacao = None
+        self.__tem_animais = None
         if isinstance(tipo_habitacao, str):
             self.__tipo_habitacao = tipo_habitacao
         if isinstance(porte_habitacao, str):
@@ -11,7 +15,7 @@ class Adotante(Pessoa):
         if isinstance(tem_animais, bool):
             self.__tem_animais = tem_animais
         self.__termo_responsabilidade = False
-        self.__adotantes = []
+
     @property
     def tipo_habitacao(self) -> str:
         return self.__tipo_habitacao
@@ -48,12 +52,4 @@ class Adotante(Pessoa):
         if isinstance(termo_responsabilidade, bool):
             self.__termo_responsabilidade = termo_responsabilidade
 
-    @property
-    def listar_adotantes(self) -> list:
-        for adotante in self.__adotantes:
-            print(adotante)
-
-    @adicionar_adotante.setter
-    def adicionar_adotante(self, str):
-        self.__adotantes.append(Adotante(tipo_habitacao, porte_habitacao, tem_animais))
-
+    
