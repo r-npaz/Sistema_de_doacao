@@ -6,13 +6,12 @@ from controleMovimentacao import ControleMovimentacao
 class ControleAdotante:
     def __init__(self) -> None:
         self.__tela_adotante = TelaAdotante(self)
+        self.__adotantes = []
 
-    def cadastrar_adotante(self):
-        #chamar a tela de adotante para pegar os dados e passar como parametro.
-        adotante = self.__tela_adotante.mostra_dados()
+    def cadastrar_adotante(self, tipo_habitacao, tem_animais, nome, cpf, data_nascimento, endereco):        
+        adotante = Adotante(tipo_habitacao, tem_animais, nome, cpf, data_nascimento, endereco)
+        self.__adotantes.append(adotante)
         
-        pass
-    
     def alterar_adotante(self):
         pass
 
@@ -25,7 +24,10 @@ class ControleAdotante:
     def adotar_animal(self):
         #avalia se todos os critérios para adoção foram respeitados
         pass
-
+    
+    def abre_tela_adotante(self):
+        while True:
+            self.__tela_adotante.mostrar_tela_cadastro()
 
 
 
