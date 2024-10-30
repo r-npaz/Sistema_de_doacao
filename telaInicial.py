@@ -1,4 +1,4 @@
-from controleTelaInicial import ControleTelaInicial
+from controleMovimentacao import ControleMovimentacao
 
 
 class TelaInicial:
