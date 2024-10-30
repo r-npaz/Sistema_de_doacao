@@ -1,0 +1,4 @@
+
+
+class Adocao:
+    pass

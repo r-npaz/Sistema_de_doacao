@@ -1,4 +1,4 @@
-from controleAdotante import ControleAdotante
+from controleAdocao import ControleAdotante
 
 
 class TelaAdotante:

@@ -28,7 +28,3 @@ class ControleAdotante:
     def abre_tela_adotante(self):
         while True:
             self.__tela_adotante.mostrar_tela_cadastro()
-
-
-
-
