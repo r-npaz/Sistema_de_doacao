@@ -1,0 +1,4 @@
+
+
+class Doacao:
+    pass

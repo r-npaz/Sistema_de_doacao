@@ -18,7 +18,7 @@ class ControleAdotante:
     def excluir_adoante(self):
         pass
     
-    def animais_disponiveis(self) -> dict:
+    def escolher_animal(self) -> dict:
         pass
 
     def adotar_animal(self):
