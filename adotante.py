@@ -1,5 +1,6 @@
 from pessoa import Pessoa
 from enum import Enum
+from datetime import datetime
 
 
 class TipoHabitacao(Enum):
@@ -47,5 +48,3 @@ class Adotante(Pessoa):
     def termo_responsabilidade(self, termo_responsabilidade: bool):
         if isinstance(termo_responsabilidade, bool):
             self.__termo_responsabilidade = termo_responsabilidade
-
-    

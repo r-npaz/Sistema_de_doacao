@@ -1,6 +1,6 @@
 from adocao import Adocao
 from doacao import Doacao
-from controleAdocao import ControleAdotante
+from controleAdotante import ControleAdotante
 from controleDoador import ControleDoador
 from controleCachorro import ControleCachorro
 from controleGato import ControleGato
@@ -28,14 +28,21 @@ class ControleMovimentacao:
         pass
 
     def adotar(self):
-        cadastrados = self.pessoasCadastradas.cadastrados()
-        adotante = int(input('entre com o seu CPF: '))
+        adotante_cpf = int(input('entre com o seu CPF: '))
         #aqui tem que tratar a entrada do usuário 
-        if adotante not in cadastrados.cpf:
-            return 'Faça o cadastro'
-        animal = self.controleAdotante.escolher_animal()
-        porte_residencia = self.controleAdotante.porte_residencia
-        if 
+        adotante = self.pessoasCadastradas.buscar_cadastrado(adotante_cpf)
+        if not adotante:
+            print('Você não está cadastrado')
+            return self.abre_tela_inicial
+        
+        if self.controleAdotante.idade_atual(adotante.data_nascimento) < 18:
+            return f'Você não pode adotar um animal'
+        
+        if adotante.doador == True:
+            return f'Você NÃO pode adotar um animal, visto que já doou um animal'
+
+        animal_escolhido = self.listar_animais_disponiveis
+
         '''
         1. Somente podem adotar animais as pessoas com mais de 18 anos completos.
         2. Pessoas que doaram um animal não podem adotar um animal. 
@@ -45,6 +52,8 @@ class ControleMovimentacao:
         apartamento pequeno.
         
         '''
+    def escolher_animal(self):
+        pass
 
     def incluir_animal(self):
         pass
@@ -56,8 +65,9 @@ class ControleMovimentacao:
         pass
 
     def listar_animais_disponiveis(self):
-        pass
-
+        self.controleCachorro.listar_cachorros_disponiveis
+        self.controleGato.listar_gatos_disponiveis
+        
     def listar_animais_adotados(self):
         pass
     
