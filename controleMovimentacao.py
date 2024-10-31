@@ -41,7 +41,8 @@ class ControleMovimentacao:
         if adotante.doador == True:
             return f'Você NÃO pode adotar um animal, visto que já doou um animal'
 
-        animal_escolhido = self.listar_animais_disponiveis
+        animal_escolhido = self.escolher_animal()
+        
 
         '''
         1. Somente podem adotar animais as pessoas com mais de 18 anos completos.
@@ -52,8 +53,20 @@ class ControleMovimentacao:
         apartamento pequeno.
         
         '''
-    def escolher_animal(self):
-        pass
+    def escolher_animal(self): #aqui talvez eu poderia add um parametro para não ficar em loop infinito
+        self.listar_animais_disponiveis()
+        animal_escolhido = (str(input('Qual o nome do animal que você quer adotar? ')))
+        #aqui tem que tratar essa entrada do usuário
+        cachorro = self.controleCachorro.buscar_cachorro(animal_escolhido)
+        if cachorro:
+            return cachorro.nome
+
+        gato = self.controleGato.buscar_gato(animal_escolhido)
+        if gato:
+            return gato.nome
+        
+        print('Não existe esse animal para adotar')
+        return self.escolher_animal()
 
     def incluir_animal(self):
         pass
