@@ -17,8 +17,19 @@ class TelaCadastro:
                     print('Valores válidos: ', inteiros_validos)
 
     def opcao_cadastro(self):
+        print('Escolha um das opções para realizar o seu cadastro')
         print('1  -  Adotar')
         print('2  -  Doar')
         opcao = self.le_num_inteiro('Escolha a opção: ', [1, 2])
         return opcao
+    
+    def opcao_doar(self):
+        print('Qual animal você quer doar?')
+        print('1  -  Para doar um cachorro')
+        print('2  -  Para doar um gato')
+        opcao = self.le_num_inteiro('Escolha uma opção: ', [1, 2])
+        return opcao
+    
+
+
 

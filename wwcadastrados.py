@@ -1,5 +1,5 @@
 
-
+'''
 class PessoasCadastradas:
     def __init__(self, pessoa: Pessoa):
         self.__pessoa = None
@@ -22,4 +22,4 @@ class PessoasCadastradas:
         if isinstance(pessoa, Pessoa):
             self.__cadastrados.append(pessoa)
             #verificar se a pessoa já está na lista antes de cadastrar, para evitar cadastros duplos. 
-    
+    '''

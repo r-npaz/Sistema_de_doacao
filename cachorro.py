@@ -1,5 +1,10 @@
 from animal import Animal
+from enum import Enum 
 
+class PorteCachorro(Enum):
+    pequeno = 1
+    medio = 2
+    grande = 3
 
 class Cachorro(Animal):
     def __init__(self, porte: str, 

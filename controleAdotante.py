@@ -1,6 +1,7 @@
 from adotante import Adotante
 from telaAdotante import TelaAdotante
 from controleMovimentacao import ControleMovimentacao
+from datetime import datetime
 
 
 class ControleAdotante:
@@ -8,26 +9,27 @@ class ControleAdotante:
         self.__tela_adotante = TelaAdotante(self)
         self.__adotantes = []
 
-    def cadastrar_adotante(self, tipo_habitacao, tem_animais, nome, cpf, data_nascimento, endereco):  
+    def cadastrar_adotante(self): 
+        cadastrar_adotante = self.abre_tela_adotante
         #na hora que eu passo essa lista, estando na ordem correta, os paramentros serão associados?       
-        novo_adotante = Adotante(tipo_habitacao, tem_animais, nome, cpf, data_nascimento, endereco)
+        novo_adotante = Adotante(cadastrar_adotante)
         if self.buscar_adotante(novo_adotante.cpf):
             return 'Essa pessoa já tem cadastro'
         self.__adotantes.append(novo_adotante)
         return 'Cadastro realizado com sucesso!'
-    
+
     def buscar_adotante(self, cpf: str) -> Adotante:
         for adotante in self.__adotantes:
             if adotante.cpf == cpf:
                 return adotante
         return None
-        
+
     def alterar_adotante(self):
         pass
 
     def excluir_adoante(self):
         pass
-    
+
     def adotar_animal(self):
         #avalia se todos os critérios para adoção foram respeitados
         pass
@@ -40,8 +42,7 @@ class ControleAdotante:
         if (data_atual.month, data_atual.day) < (data_nascimento.month, data_nascimento.day):
             idade -= 1
         return idade
-
     
     def abre_tela_adotante(self):
-        while True:
-            self.__tela_adotante.mostrar_tela_cadastro()
+        adotante = self.__tela_adotante.mostrar_tela_cadastro()
+        return adotante
