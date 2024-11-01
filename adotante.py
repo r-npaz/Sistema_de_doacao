@@ -12,7 +12,7 @@ class TipoHabitacao(Enum):
 
 class Adotante(Pessoa):
     def __init__(self, tipo_habitacao: TipoHabitacao, tem_animais: bool, 
-                 nome: str, cpf: str, data_nascimento: str, endereco: str):
+                 nome: str, cpf: str, data_nascimento: str, endereco: str,):
         super().__init__(nome, cpf, data_nascimento, endereco)
         self.__tipo_habitacao = None
         self.__tem_animais = None

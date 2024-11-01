@@ -8,10 +8,13 @@ class ControleAdotante:
         self.__tela_adotante = TelaAdotante(self)
         self.__adotantes = []
 
-    def cadastrar_adotante(self, tipo_habitacao, tem_animais, nome, cpf, data_nascimento, endereco):        
-        adotante = Adotante(tipo_habitacao, tem_animais, nome, cpf, data_nascimento, endereco)
-        self.__adotantes.append(adotante)
-        #estou jogando essas informações para uma classe que irá guardar todos os cadastros. Posso add um referencia (bool) para diferenciar um adotante de um doador. 
+    def cadastrar_adotante(self, tipo_habitacao, tem_animais, nome, cpf, data_nascimento, endereco):  
+        #na hora que eu passo essa lista, estando na ordem correta, os paramentros serão associados?       
+        novo_adotante = Adotante(tipo_habitacao, tem_animais, nome, cpf, data_nascimento, endereco)
+        if self.buscar_adotante(novo_adotante.cpf):
+            return 'Essa pessoa já tem cadastro'
+        self.__adotantes.append(novo_adotante)
+        return 'Cadastro realizado com sucesso!'
     
     def buscar_adotante(self, cpf: str) -> Adotante:
         for adotante in self.__adotantes:

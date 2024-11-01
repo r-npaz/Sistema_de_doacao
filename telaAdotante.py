@@ -12,8 +12,7 @@ class TelaAdotante:
         endereco = str(input('Entre com o seu endereço: ')) #tenho que tratar essa entrada
         tem_animais = str(input('Tem animais: S/N ')) #tenho que tratar essa entrada
         tipo_habitacao = self.tipo_habitacao()
-        self.controleAdotante.cadastrar_adotante(tipo_habitacao = tipo_habitacao, tem_animais = tem_animais, nome = nome,
-                                                 cpf = cpf, data_nascimento = data_nascimento, endereco = endereco )
+        return [tipo_habitacao, tem_animais, nome, cpf, data_nascimento, endereco ]
                 
     def tipo_habitacao(self) -> int:
         print('1 - casa pequena')

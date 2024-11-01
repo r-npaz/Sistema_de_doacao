@@ -6,6 +6,8 @@ class Doador(Pessoa):
     def __init__(self, nome: str, cpf: str, data_nascimento: str, endereco: str):
         super().__init__(nome, cpf, data_nascimento, endereco)
 
+        self.__doadores = []
+
     def registrar_doacao(self):
         pass
 

@@ -5,14 +5,23 @@ from controleDoador import ControleDoador
 from controleCachorro import ControleCachorro
 from controleGato import ControleGato
 from telaInicial import TelaInicial
-from cadastrados import PessoasCadastradas
+from telaCadastro import TelaCadastro
+from telaAdotante import TelaAdotante
+from telaDoador import TelaDoador
 
 
 class ControleMovimentacao:
     def __init__(self):
-        self.__tela_inicial = TelaInicial(self) 
+        self.__tela_inicial = TelaInicial(self)
+        self.__tela_cadastro = TelaCadastro(self)
+        self.__tela_adotante = TelaAdotante(self) # isso não deveria estar aqui, pertence ao controleAdotante
+        self.__tela_doador = TelaDoador(self) # mesma coisa do de cima
+        self.__adotante = ControleAdotante(self)
+        self.__doador = ControleDoador(self)
+
         #Não consegui compreender o real necessidade de inicializar a tela aqui e pq não funciona 
         #se eu chamar o metodo mostra_opcao_tela no metodo abre_tela_inicial
+ 
     
     def iniciar(self):
         self.abre_tela_inicial()
@@ -22,7 +31,19 @@ class ControleMovimentacao:
         exit()
     
     def cadastrar(self):
-        pass
+        opcao_escolhida = {1: self.cadastrar_adotante, 2: self.cadastrar_doador}
+        while True:
+            opcao = self.__tela_cadastro.opcao_cadastro()
+            funcao_escolhida = opcao_escolhida[opcao]
+            funcao_escolhida() 
+
+    def cadastrar_adotante(self):
+        adotante = self.__tela_adotante.mostrar_tela_cadastro()
+        self.__adotante.cadastrar_adotante(adotante)
+
+    def cadastrar_doador(self):
+        doador = self.__tela_doador.mostrar_tela_cadastro()
+        self.__doador.cadastra_doador(doador)
 
     def doar(self):
         pass
