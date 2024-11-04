@@ -7,6 +7,7 @@ from datetime import datetime
 class ControleAdotante:
     def __init__(self) -> None:
         self.__tela_adotante = TelaAdotante(self)
+        self.__adotante = Adotante(self)
         self.__adotantes = []
 
     def cadastrar_adotante(self): 
@@ -24,16 +25,23 @@ class ControleAdotante:
                 return adotante
         return None
 
-    def alterar_adotante(self):
-        pass
-
     def excluir_adoante(self):
         pass
 
-    def adotar_animal(self):
-        #avalia se todos os critérios para adoção foram respeitados
-        pass
+    def assinar_termo_responsabilidade(self, cpf):
+        adotante = self.buscar_adotante(cpf)
+        if adotante:
+            adotante.assinar_termo_responsabilidade()
+            print('Termo assinado')
+        else:
+            print('Adotante não localizado')
 
+    def termo_responsabilidade(self) -> bool:
+        return self.__adotante.termo_responsabilidade()
+    
+    def data_adocao(self) -> str:
+        return self.__adotante.data_assinatura
+    
         #um getter, por definição, pode receber algum parametro?
     def idade_atual(self, data_nascimento: str) -> int:
         data_nascimento = datetime.strptime(data_nascimento, '%d/%m/%Y')

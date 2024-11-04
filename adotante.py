@@ -21,6 +21,7 @@ class Adotante(Pessoa):
         if isinstance(tem_animais, bool):
             self.__tem_animais = tem_animais
         self.__termo_responsabilidade = False
+        self.__data_termo_assinado = None
 
     @property
     def tipo_habitacao(self) -> TipoHabitacao:
@@ -45,6 +46,11 @@ class Adotante(Pessoa):
         return self.__termo_responsabilidade
 
     @termo_responsabilidade.setter
-    def termo_responsabilidade(self, termo_responsabilidade: bool):
-        if isinstance(termo_responsabilidade, bool):
-            self.__termo_responsabilidade = termo_responsabilidade
+    def assinar_termo_responsabilidade(self):
+        if self.__termo_responsabilidade != False:
+            self.__termo_responsabilidade = True
+            self.__data_termo_assinado = datetime.now()
+
+    @property
+    def data_assinatura(self) -> str:
+        return self.__data_termo_assinado

@@ -37,15 +37,17 @@ class ControleMovimentacao:
             funcao_escolhida() 
 
     def doar(self):
-        animal = self.incluir_animal
+        animal = self.incluir_animal()
         if animal:
             print('Esse animal já foi doado uma vez')
+            return self.abre_tela_inicial()
         print('Animal cadastrado com sucesso!')
-        doador = self.__doador.cadastrar_doador
+        doador = self.__doador.cadastrar_doador()
         if doador:
             print('Essa pessoa já possui cadastro')
+            return self.abre_tela_inicial
         print('Cadastro realizado com sucesso!')
-        dados_doacao = self.__tela_cadastro.dados_doacao
+        dados_doacao = self.__tela_cadastro.dados_doacao()
         doacao = Doacao(dados_doacao[0], animal, doador, dados_doacao[1])
         if self.__doacao.buscar_doacao(animal.numero) == False:
             self.__doacao.inserir_doacao
@@ -53,45 +55,51 @@ class ControleMovimentacao:
         return 'Doação não concluida'      
 
     def adotar(self):
-        adotante_cpf = int(input('entre com o seu CPF: '))
-        #aqui tem que tratar a entrada do usuário 
-        adotante = self.pessoasCadastradas.buscar_cadastrado(adotante_cpf)
+        adotante_cpf = str(input('entre com o seu CPF: '))
+        adotante = self.__adotante.buscar_adotante(adotante_cpf)
         if not adotante:
             print('Você não está cadastrado')
-            return self.abre_tela_inicial
+            return self.__adotante.cadastrar_adotante()
         
-        if self.controleAdotante.idade_atual(adotante.data_nascimento) < 18:
-            return f'Você não pode adotar um animal'
+        if not self.__adotante.idade_atual(adotante.data_nascimento) > 18:
+            print('Você não pode adotar um animal, é menor de 18 anos')
+            return self.abre_tela_inicial()
         
-        if adotante.doador == True:
-            return f'Você NÃO pode adotar um animal, visto que já doou um animal'
-
+        if self.__doador.buscar_doador(adotante.cpf):
+            print('você não pode adptar um animal, pois já doou um animal')
+            return self.abre_tela_inicial()
+        
         animal_escolhido = self.escolher_animal()
+        if isinstance(animal_escolhido, ControleCachorro):
+            if (animal_escolhido.porte == 3) and (adotante.tipo_habitacao == 3):
+                print('Esse animal não é compativel com o tamanho da sua habitação')
+                return self.abre_tela_inicial()
+            
+        if self.__adotante.termo_responsabilidade != True:
+            self.__adotante.assinar_termo_responsabilidade
         
+        adocao = Adocao(self.__adotante.data_adocao, animal_escolhido, adotante, self.__adotante.termo_responsabilidade )
+        self.__adocao.inserir_adocao
+        self.__cachorro.remover_cachorro(animal_escolhido.numero_chip)
+        self.__gato.remover_gato(animal_escolhido.numero_chip)
 
-        '''
-        1. Somente podem adotar animais as pessoas com mais de 18 anos completos.
-        2. Pessoas que doaram um animal não podem adotar um animal. 
-        3. Somente podem ser adotados os animais que já receberam as vacinas: raiva, 
-        leptospirose e hepatite infecciosa.
-        4. Cães de porte grande não podem ser adotados por pessoas que moram em 
-        apartamento pequeno.
-        
-        '''
+        return 'Adoção concluída'  
+
     def escolher_animal(self): #aqui talvez eu poderia add um parametro para não ficar em loop infinito
-        self.listar_animais_disponiveis()
-        animal_escolhido = (str(input('Qual o nome do animal que você quer adotar? ')))
-        #aqui tem que tratar essa entrada do usuário
-        cachorro = self.controleCachorro.buscar_cachorro(animal_escolhido)
-        if cachorro:
-            return cachorro.nome
-
-        gato = self.controleGato.buscar_gato(animal_escolhido)
-        if gato:
-            return gato.nome
-        
-        print('Não existe esse animal para adotar')
-        return self.escolher_animal()
+        tentativas = 3
+        while tentativas > 0:
+            self.listar_animais_disponiveis()
+            animal_escolhido = input('Qual o nome do animal que você quer adotar? ')
+            cachorro = self.controleCachorro.buscar_cachorro(animal_escolhido)
+            if cachorro:
+                return cachorro.nome
+            gato = self.controleGato.buscar_gato(animal_escolhido)
+            if gato:
+                return gato.nome
+            print('Animal não encontrado. Tente novamente.')
+            tentativas -= 1
+        print('Número máximo de tentativas atingido.')
+        return None
 
     def incluir_animal(self):
         animal_doado = {1: self.__cachorro.cadastrar_cachorro, 2: self.__gato.cadastrar_gato}

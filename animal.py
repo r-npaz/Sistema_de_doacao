@@ -39,23 +39,23 @@ class Animal(ABC):
         if isinstance(nome, str):
             self.__nome = nome
 
-    @abstractmethod
     @property
     def raca(self):
-        #não sei se faz sentido fazer essa distinção nas classes filhas, mas... 
-        pass
-
+        return self.__raca
+    
     def aplicar_vacina(self, numero_chip: str, vacina_aplicada: str, data_aplicacao: str):
         if isinstance(numero_chip, str):
             if isinstance(vacina_aplicada, str):
                 if isinstance(data_aplicacao, str):
                     self.__aplicar_vacina = Vacina(numero_chip, vacina_aplicada, data_aplicacao)
                     self.__historico_vacinas.append(self.__aplicar_vacina)
-
-    @property
-    def historico_vacinas(self) -> list:
-        for vacina in self.__historico_vacinas:
-            print(f'Animal: {vacina.numero_chip} - Vacina: {vacina.vacina_aplicada} - Data: {vacina.data_aplicacao}')
-
+                    return True
+        return False
     
-
+    @property
+    def historico_vacinas(self, numero_chip: str) -> list:
+        his_vacinas = []
+        for vacina in self.__historico_vacinas:
+            if vacina.numero_chip == numero_chip:
+                his_vacinas.append(vacina)
+            return his_vacinas

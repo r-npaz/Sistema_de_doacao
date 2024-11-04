@@ -23,6 +23,12 @@ class ControleCachorro:
             if cachorro.numero_chip == numero_chip:
                 return cachorro
             return 'Cachorro não localizado'
+        
+    def remover_cachorro(self, numero_chip: str):
+        for cachorro in self.__cadastro_cachorros:
+            if cachorro.numero_chip == numero_chip:
+                self.__cadastro_cachorros.pop(cachorro)
+                print('Cachorro removido da lista de adoção')
 
     def vacinar(self):
         pass
