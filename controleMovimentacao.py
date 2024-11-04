@@ -45,7 +45,12 @@ class ControleMovimentacao:
         if doador:
             print('Essa pessoa já possui cadastro')
         print('Cadastro realizado com sucesso!')
-        doacao = Doacao()
+        dados_doacao = self.__tela_cadastro.dados_doacao
+        doacao = Doacao(dados_doacao[0], animal, doador, dados_doacao[1])
+        if self.__doacao.buscar_doacao(animal.numero) == False:
+            self.__doacao.inserir_doacao
+            return 'Doacao realizada'
+        return 'Doação não concluida'      
 
     def adotar(self):
         adotante_cpf = int(input('entre com o seu CPF: '))

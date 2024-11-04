@@ -30,6 +30,11 @@ class TelaCadastro:
         opcao = self.le_num_inteiro('Escolha uma opção: ', [1, 2])
         return opcao
     
+    def dados_doacao(self, data_doacao: str, motivo_doacao: str) -> list:
+        print('Finalizando a doação')
+        data_doacao = str(input('Entre com a data da doação: '))
+        motivo_doacao = str(input('Entre com o motivo da doação: '))
+        return (data_doacao, motivo_doacao)
 
 
 
