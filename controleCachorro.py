@@ -29,9 +29,20 @@ class ControleCachorro:
             if cachorro.numero_chip == numero_chip:
                 self.__cadastro_cachorros.pop(cachorro)
                 print('Cachorro removido da lista de adoção')
+    
+    def listar_cachorros(self) -> list:
+        for cachorro in self.__cadastros_cachorros:
+            print(f'Cachorro nome: {cachorro.nome} - ID: {cachorro.numero_chip}')
 
     def vacinar(self):
-        pass
+        self.cachorro.aplicar_vacina(numero_chip, vacina, data_aplicacao)
+    
+    def historico_vacina(self) -> list:
+        return self.cachorro.historico_vacinas()
 
     def verificar_vacinas(self):
-        pass
+        vacinas_necessarias = ['raiva', 'leptospirose', 'hepatite_infecciosa']
+        vacinas = self.historico_vacinas()
+        for vacina in vacinas:
+            if
+

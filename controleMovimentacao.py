@@ -74,7 +74,11 @@ class ControleMovimentacao:
             if (animal_escolhido.porte == 3) and (adotante.tipo_habitacao == 3):
                 print('Esse animal não é compativel com o tamanho da sua habitação')
                 return self.abre_tela_inicial()
-            
+
+        if not self.__cachorro.verificar_vacina(animal_esolhido.numero_chip) or self.__gato.verificar_vacina(animal_escolhido.numero_chip):
+            print('O animal escolhido não tomou todas as vacinas')
+            return self.abre_tela_inicial()
+ 
         if self.__adotante.termo_responsabilidade != True:
             self.__adotante.assinar_termo_responsabilidade
         
@@ -90,12 +94,12 @@ class ControleMovimentacao:
         while tentativas > 0:
             self.listar_animais_disponiveis()
             animal_escolhido = input('Qual o nome do animal que você quer adotar? ')
-            cachorro = self.controleCachorro.buscar_cachorro(animal_escolhido)
+            cachorro = self.__cachorro.buscar_cachorro(animal_escolhido)
             if cachorro:
-                return cachorro.nome
-            gato = self.controleGato.buscar_gato(animal_escolhido)
+                return cachorro
+            gato = self.__gato.buscar_gato(animal_escolhido)
             if gato:
-                return gato.nome
+                return gato
             print('Animal não encontrado. Tente novamente.')
             tentativas -= 1
         print('Número máximo de tentativas atingido.')
@@ -115,11 +119,28 @@ class ControleMovimentacao:
         pass
 
     def listar_animais_disponiveis(self):
-        self.controleCachorro.listar_cachorros_disponiveis
-        self.controleGato.listar_gatos_disponiveis
+        self.__cachorro.listar_cachorros()
+        self.__gato.listar_gatos()
         
     def listar_animais_adotados(self):
         pass
+
+    def listar_animais_doados(self):
+        pass
+
+    def vacinar(self, numero_chip, vacina, data_aplicacao):
+        if self.__gato.buscar_gato(numero_chip):
+            self.__gato.aplicar_vacina
+            return f'Vacina aplicada ao {numero_chip}'
+        else:
+            self.__cachorro.buscar_cachorro(numero_chip)
+            self.__cachorro.aplicar_vacina
+            return f'Vacina aplicada ao {numero_chip}'
+        return None
+        
+    def vacinar_animal(self):
+        animal = self.__tela_inicial.tela_vacinar
+        self.vacinar(animal)
     
     def abre_tela_inicial(self):
         opcao_escolhida = {0: self.finalizar, 1: self.cadastrar, 2: self.doar, 3: self.adotar, 4: self.incluir_animal, 

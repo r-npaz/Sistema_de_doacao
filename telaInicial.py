@@ -30,3 +30,11 @@ class TelaInicial:
         print('0  -  Sair')
         opcao = self.le_num_inteiro('Escolha a opção: ', [0, 1, 2, 3, 4, 5, 6, 7, 8])
         return opcao
+    
+    def tela_vacinar(self) -> list:
+        print('Hora de vacinar')
+        numero_chip = str(input('Qual a ID do animal: '))
+        vacina = str(input('Qual a vacina aplicada: '))
+        data_aplicacao = str(input('Qual a data de aplicação: '))
+        return [numero_chip, vacina, data_aplicacao]
+        

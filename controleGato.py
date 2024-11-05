@@ -7,9 +7,6 @@ class ControleGato:
     def __init__(self) -> None:
         self.__tela_gato = TelaGato
         self.__gatos = []
-    
-    def cadastrar_gato(self):
-        gato = self.__tela_gato.cadastrar_gato
 
     def cadastrar_gato(self):
         cadastrar_gato = self.__tela_gato.cadastrar_gato
@@ -20,6 +17,10 @@ class ControleGato:
         self.__gatos.append(novo_gato)
         print('gato cadastrado')
         return novo_gato
+    
+    def listar_gatos(self) -> str:
+        for gato in self.__gatos:
+            print(f'Gato nome: {gato.nome} - ID: {gato.numero_chip}')
 
     def buscar_gato(self, numero_chip: str) -> Gato:
         for gato in self.__gatos:
@@ -34,9 +35,7 @@ class ControleGato:
                 print('Gato removido da lista de adoção')
         
     def aplicar_vacina(self, numero_chip: str, vacina_aplicada: str, data_aplicacao: str):
-        if Gato.aplicar_vacina(numero_chip, vacina_aplicada, data_aplicacao):
-            return True
-        return False
+        self.gato.aplicar_vacina(numero_chip, vacina_aplicada, data_aplicacao):
 
     def verificar_vacinas(self):
         pass

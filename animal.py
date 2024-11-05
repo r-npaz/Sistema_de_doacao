@@ -17,9 +17,10 @@ class Animal(ABC):
             self.__nome = nome
         if isinstance(raca, str):
             self.__raca = raca
-        if isinstance(vacina_aplicada, str) and isinstance(data_aplicacao, str):
-            self.__aplicar_vacina = Vacina(self.__numero_chip, self.__vacina_aplicada, self.__data_aplicacao)
-            self.__historico_vacinas.append(self.__aplicar_vacina)
+        if isinstance(vacina_aplicada, str):
+            self.__vacina_aplicada = vacina_aplicada
+        if isinstance(data_aplicacao, str):
+            self.__data_aplicacao = data_aplicacao
 
     @property
     def numero_chip(self) -> str:
@@ -53,9 +54,6 @@ class Animal(ABC):
         return False
     
     @property
-    def historico_vacinas(self, numero_chip: str) -> list:
-        his_vacinas = []
-        for vacina in self.__historico_vacinas:
-            if vacina.numero_chip == numero_chip:
-                his_vacinas.append(vacina)
-            return his_vacinas
+    def historico_vacinas(self, numero_chip: str) -> str:
+        vacinas_chip = [vacina for vacina in self.__historico_vacinas if vacina[numero_chip] == numero_chip]
+        return vacinas_chip

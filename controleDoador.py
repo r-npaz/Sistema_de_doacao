@@ -23,8 +23,14 @@ class ControleDoador:
                 return doador
             return None
     
-    def doar_animal(self, animal: Animal):
-         pass
+    def excluir_adotante(self, cpf: str):
+        for doador in self.__doadores:
+            if doador.cpf == cpf:
+                self.__doadores.pop(doador)
+                return f'Doador: {doador.cpf} - {doador.nome} excluido!'
+        return False
+
+
         
     def tela_doador(self):
          doador = self.__tela_doador.mostrar_tela_cadastro

@@ -25,8 +25,12 @@ class ControleAdotante:
                 return adotante
         return None
 
-    def excluir_adoante(self):
-        pass
+    def excluir_adoante(self, cpf: str):
+        for adotante in self.__adotantes:
+            if adotante.cpf == cpf:
+                self.__adotantes.pop(adotante)
+                return f'Adotante: {adotante.cpf} - {adotante.nome} removido!' 
+        return False 
 
     def assinar_termo_responsabilidade(self, cpf):
         adotante = self.buscar_adotante(cpf)

@@ -42,3 +42,4 @@ class TelaCachorro:
                 print('Valor incorreto: Digite um valor numerico inteiro válido')
                 if inteiros_validos:
                     print('Valores válidos: ', inteiros_validos)
+
