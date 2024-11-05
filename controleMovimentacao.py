@@ -16,7 +16,8 @@ class ControleMovimentacao:
         self.__doador = ControleDoador(self)
         self.__gato = ControleGato(self)
         self.__cachorro = ControleCachorro(self)
-        self.__doacao = Doacao(self)
+        self.__doacoes = []
+        self.__adocoes = []
 
         #Não consegui compreender o real necessidade de inicializar a tela aqui e pq não funciona 
         #se eu chamar o metodo mostra_opcao_tela no metodo abre_tela_inicial
@@ -43,16 +44,36 @@ class ControleMovimentacao:
             return self.abre_tela_inicial()
         print('Animal cadastrado com sucesso!')
         doador = self.__doador.cadastrar_doador()
+
         if doador:
             print('Essa pessoa já possui cadastro')
-            return self.abre_tela_inicial
+            return self.abre_tela_inicial()
         print('Cadastro realizado com sucesso!')
         dados_doacao = self.__tela_cadastro.dados_doacao()
         doacao = Doacao(dados_doacao[0], animal, doador, dados_doacao[1])
+
+        if self.buscar_doacao_repetida():
+            return f'A doação do animal {animal.numero_chip} já foi feita por {doador.cpf}'
+
         if self.__doacao.buscar_doacao(animal.numero) == False:
             self.__doacao.inserir_doacao
             return 'Doacao realizada'
-        return 'Doação não concluida'      
+        return 'Doação não concluida' 
+     
+    def buscar_doacao_repetida(self, cpf: str, numero_chip):
+        for doacao in self.__doacoes:
+            if (doacao.doador.cpf == cpf) and (doacao.animal.numero_chip == numero_chip):
+                return True
+        return False
+    
+    @property
+    def buscar_doacoes(self) -> list:
+        return self.__doacoes
+    
+    def inserir_doacao(self, doacao: Doacao):
+        if not self.buscar_doacao_repetida(doacao.doador.cpf, doacao.animal_doado.numero_chip):
+            self.__doacoes.append(doacao)
+            return 'Doacção cadastrada com sucesso'
 
     def adotar(self):
         adotante_cpf = str(input('entre com o seu CPF: '))
@@ -74,19 +95,21 @@ class ControleMovimentacao:
             if (animal_escolhido.porte == 3) and (adotante.tipo_habitacao == 3):
                 print('Esse animal não é compativel com o tamanho da sua habitação')
                 return self.abre_tela_inicial()
+            if not self.__cachorro.verificar_vacinas(animal_escolhido.numero_chip):
+                print('O animal escolhido não tomou todas as vacinas')
+                return self.abre_tela_inicial()
+        else:
+            if not self.__gato.verificar_vacinas(animal_escolhido.numero_chip):
+                print('O animal escolhido não tomou todas as vacinas')
+                return self.abre_tela_inicial()
 
-        if not self.__cachorro.verificar_vacina(animal_esolhido.numero_chip) or self.__gato.verificar_vacina(animal_escolhido.numero_chip):
-            print('O animal escolhido não tomou todas as vacinas')
-            return self.abre_tela_inicial()
- 
         if self.__adotante.termo_responsabilidade != True:
             self.__adotante.assinar_termo_responsabilidade
         
         adocao = Adocao(self.__adotante.data_adocao, animal_escolhido, adotante, self.__adotante.termo_responsabilidade )
-        self.__adocao.inserir_adocao
+        self.__adocoes.append(adocao)
         self.__cachorro.remover_cachorro(animal_escolhido.numero_chip)
         self.__gato.remover_gato(animal_escolhido.numero_chip)
-
         return 'Adoção concluída'  
 
     def escolher_animal(self): #aqui talvez eu poderia add um parametro para não ficar em loop infinito
@@ -133,19 +156,19 @@ class ControleMovimentacao:
             self.__gato.aplicar_vacina
             return f'Vacina aplicada ao {numero_chip}'
         else:
-            self.__cachorro.buscar_cachorro(numero_chip)
-            self.__cachorro.aplicar_vacina
-            return f'Vacina aplicada ao {numero_chip}'
+            if self.__cachorro.buscar_cachorro(numero_chip):
+                self.__cachorro.aplicar_vacina
+                return f'Vacina aplicada ao {numero_chip}'
         return None
         
     def vacinar_animal(self):
-        animal = self.__tela_inicial.tela_vacinar
+        animal = self.__tela_inicial.tela_vacinar()
         self.vacinar(animal)
     
     def abre_tela_inicial(self):
         opcao_escolhida = {0: self.finalizar, 1: self.cadastrar, 2: self.doar, 3: self.adotar, 4: self.incluir_animal, 
                            5: self.listar_adotantes, 6: self.listar_doadores, 7: self.listar_animais_disponiveis,
-                           8: self.listar_animais_adotados}
+                           8: self.listar_animais_adotados, 9: self.vacinar_animal}
         while True:
             opcao = self.__tela_inicial.mostra_tela_opcoes()
             funcao_escolhida = opcao_escolhida[opcao]

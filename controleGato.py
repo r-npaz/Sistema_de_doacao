@@ -7,6 +7,7 @@ class ControleGato:
     def __init__(self) -> None:
         self.__tela_gato = TelaGato
         self.__gatos = []
+        self.__vacinas_aplicadas = []
 
     def cadastrar_gato(self):
         cadastrar_gato = self.__tela_gato.cadastrar_gato
@@ -34,8 +35,21 @@ class ControleGato:
                 self.___gatos.pop(gato)
                 print('Gato removido da lista de adoção')
         
-    def aplicar_vacina(self, numero_chip: str, vacina_aplicada: str, data_aplicacao: str):
-        self.gato.aplicar_vacina(numero_chip, vacina_aplicada, data_aplicacao):
+    def vacinar(self, numero_chip, vacina, data_aplicacao):
+        vacina_tomada = self.gato.aplicar_vacina_gato(numero_chip, vacina, data_aplicacao)
+        self.__vacinas_aplicadas.append(vacina_tomada)
+
+    def historico_vacina(self, numero_chip: str) -> list:
+        vacinas = [vacina for vacina in self.__vacinas_aplicadas if vacina.numero_chip == numero_chip]
+        return vacinas
 
     def verificar_vacinas(self):
-        pass
+        vacinas_necessarias = ['VacinasNecessarias.raiva', 'VacinasNecessarias.leptospirose', 'VacinasNecessarias.hepatite_infecciosa']
+        vacinas = self.historico_vacina()
+        aplicadas = 0
+        for vacina in vacinas:
+            for vacina_necessaria in vacinas_necessarias:
+                if vacina == vacina_necessaria:
+                    aplicadas += 1
+        if aplicadas == 3: return True 
+        return False 

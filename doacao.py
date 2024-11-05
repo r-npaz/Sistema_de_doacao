@@ -6,7 +6,6 @@ class Doacao:
         self.__animal_doado = None
         self.__doador = None
         self.__motivo = None
-        self.__doacoes = []
         if isinstance(data_doacao, str):
             self.__data_doacao = data_doacao
         if isinstance(animal_doado, Animal):
@@ -17,25 +16,37 @@ class Doacao:
             self.__motivo = motivo
 
     @property
-    def doacoes(self):
-        for doacao in self.__doacoes:
-            print(doacao)
+    def data_doacao(self) -> str:
+        return  self.__data_doacao
+    
+    @data_doacao.setter
+    def data_doacao(self, data_adocao: str):
+        if isinstance(data_adocao, str):
+            self.__data_doacao = data_adocao
     
     @property
-    def buscar_doador(self, cpf:str) -> str:
-        for doacao in self.__doacoes:
-            if doacao.doador.cpf == cpf:
-                return doacao.doador
-        return None
+    def animal_doado(self) -> Animal:
+        return  self.__animal_doado
     
-    def inserir_doacao(self, doacao: Doacao):
-        if isinstance(doacao, Doacao):
-            self.__doacoes.append(doacao)
-            return 'Doacao acrescentada'
-        return False
+    @animal_doado.setter
+    def animal_doado(self, animal_doado: Animal):
+        if isinstance(animal_doado, Animal):
+            self.animal_doado = animal_doado
     
-    def buscar_doacao(self, numero_chip: str):
-        for doacao in self.__doacoes:
-            if doacao.animal_doado.numero_chip == numero_chip:
-                return True
-        return False
+    @property
+    def doador(self) -> Doador:
+        return  self.__doador
+    
+    @doador.setter
+    def doado(self, doador: Doador):
+        if isinstance(doador, Doador):
+            self.__doador = doador
+    
+    @property
+    def motivo(self) -> str:
+        return  self.__motivo
+    
+    @motivo.setter
+    def motivo(self, motivo: str):
+        if isinstance(motivo, str):
+            self.__motivo = motivo

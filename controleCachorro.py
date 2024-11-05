@@ -7,6 +7,7 @@ class ControleCachorro:
     def __init__(self) -> None:
         self.__tela_cachorro = TelaCachorro(self)
         self.__cadastro_cachorros = []
+        self.__vacinas_aplicadas = []
         
     def cadastrar_cachorro(self):
         cadastrar_cachorro = self.__tela_cachorro.cadastrar_cachorro
@@ -34,15 +35,26 @@ class ControleCachorro:
         for cachorro in self.__cadastros_cachorros:
             print(f'Cachorro nome: {cachorro.nome} - ID: {cachorro.numero_chip}')
 
-    def vacinar(self):
-        self.cachorro.aplicar_vacina(numero_chip, vacina, data_aplicacao)
-    
-    def historico_vacina(self) -> list:
-        return self.cachorro.historico_vacinas()
+    def vacinar(self, numero_chip, vacina, data_aplicacao):
+        vacina_tomada = self.cachorro.aplicar_vacina_cachorro(numero_chip, vacina, data_aplicacao)
+        self.__vacinas_aplicadas.append(vacina_tomada)
+
+    def historico_vacina(self, numero_chip: str) -> list:
+        vacinas = [vacina for vacina in self.__vacinas_aplicadas if vacina.numero_chip == numero_chip]
+        return vacinas
 
     def verificar_vacinas(self):
-        vacinas_necessarias = ['raiva', 'leptospirose', 'hepatite_infecciosa']
-        vacinas = self.historico_vacinas()
+        vacinas_necessarias = ['VacinasNecessarias.raiva', 'VacinasNecessarias.leptospirose', 'VacinasNecessarias.hepatite_infecciosa']
+        vacinas = self.historico_vacina()
+        aplicadas = 0
         for vacina in vacinas:
-            if
+            for vacina_necessaria in vacinas_necessarias:
+                if vacina == vacina_necessaria:
+                    aplicadas += 1
+        if aplicadas == 3: return True 
+        return False 
 
+
+
+            
+        

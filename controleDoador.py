@@ -29,8 +29,6 @@ class ControleDoador:
                 self.__doadores.pop(doador)
                 return f'Doador: {doador.cpf} - {doador.nome} excluido!'
         return False
-
-
         
     def tela_doador(self):
          doador = self.__tela_doador.mostrar_tela_cadastro
