@@ -10,12 +10,12 @@ from limite.telaCadastro import TelaCadastro
 
 class ControleMovimentacao:
     def __init__(self):
-        self.__tela_inicial = TelaInicial()
-        self.__tela_cadastro = TelaCadastro()
-        self.__adotante = ControleAdotante()
-        self.__doador = ControleDoador()
-        self.__gato = ControleGato()
-        self.__cachorro = ControleCachorro()
+        self.__tela_inicial = TelaInicial(self)
+        self.__tela_cadastro = TelaCadastro(self)
+        self.__adotante = ControleAdotante
+        self.__doador = ControleDoador
+        self.__gato = ControleGato
+        self.__cachorro = ControleCachorro
         self.__doacoes = []
         self.__adocoes = []
     
@@ -52,7 +52,7 @@ class ControleMovimentacao:
             return f'A doação do animal {animal.numero_chip} já foi feita por {doador.cpf}'
 
         if self.__doacao.buscar_doacao(animal.numero) == False:
-            self.__doacao.inserir_doacao
+            self.__doacao.inserir_doacao(doacao)
             return 'Doacao realizada'
         return 'Doação não concluida' 
      
@@ -128,7 +128,7 @@ class ControleMovimentacao:
     def incluir_animal(self):
         animal_doado = {1: self.__cachorro.cadastrar_cachorro, 2: self.__gato.cadastrar_gato}
         while True:
-            opcao = self.__tela_cadastro.opcao_doar
+            opcao = self.__tela_cadastro.opcao_doar()
             funcao_escolhida = animal_doado[opcao]
             funcao_escolhida()
 
@@ -150,17 +150,17 @@ class ControleMovimentacao:
 
     def vacinar(self, numero_chip, vacina, data_aplicacao):
         if self.__gato.buscar_gato(numero_chip):
-            self.__gato.aplicar_vacina
+            self.__gato.vacinar(numero_chip, vacina, data_aplicacao)
             return f'Vacina aplicada ao {numero_chip}'
         else:
             if self.__cachorro.buscar_cachorro(numero_chip):
-                self.__cachorro.aplicar_vacina
+                self.__cachorro.vacinar(numero_chip, vacina, data_aplicacao)
                 return f'Vacina aplicada ao {numero_chip}'
         return None
         
     def vacinar_animal(self):
         animal = self.__tela_inicial.tela_vacinar()
-        self.vacinar(animal)
+        self.vacinar(animal[0], animal[1], animal[2])
     
     def abre_tela_inicial(self):
         opcao_escolhida = {0: self.finalizar, 1: self.cadastrar, 2: self.doar, 3: self.adotar, 4: self.incluir_animal, 
@@ -170,6 +170,3 @@ class ControleMovimentacao:
             opcao = self.__tela_inicial.mostra_tela_opcoes()
             funcao_escolhida = opcao_escolhida[opcao]
             funcao_escolhida()
-
-
-
