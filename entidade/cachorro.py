@@ -1,4 +1,4 @@
-from animal import Animal
+from entidade.animal import Animal
 from enum import Enum 
 
 class PorteCachorro(Enum):

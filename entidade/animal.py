@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from vacina import Vacina
+from entidade.vacina import Vacina
 
 
 class Animal(ABC):
