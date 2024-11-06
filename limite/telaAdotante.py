@@ -1,4 +1,4 @@
-from controleAdotante import ControleAdotante
+from controle.controleAdotante import ControleAdotante
 
 
 class TelaAdotante:
@@ -22,6 +22,20 @@ class TelaAdotante:
         print('5 - outros')
         opcao = self.le_num_inteiro("Escolha a opção: ", [1, 2, 3, 4, 5])
         return opcao
+
+    def termo_adocao(self) -> bool:
+        print('Está na hora de assinarmos o Termo de Adoção')
+        cont = 0
+        while cont < 3:
+            try:
+                termo = input('Você assina o termo de adoção? S/N: ').upper() 
+                if termo not in ['S', 'N']:
+                    raise ValueError("Entrada inválida! Por favor, digite 'S' ou 'N'.")
+                break  
+            except ValueError as e:
+                print(e)  
+                cont += 1
+        return termo == 'S'
     
     def le_num_inteiro(self, mensagem: str = '', inteiros_validos: list = None):
         while True:
@@ -35,6 +49,3 @@ class TelaAdotante:
                 print('Valor incorreto: Digite um valor numerico inteiro válido')
                 if inteiros_validos:
                     print('Valores válidos: ', inteiros_validos)
-
-
-            

@@ -1,4 +1,4 @@
-from controleCachorro import ControleCachorro
+from controle.controleCachorro import ControleCachorro
 
 
 class TelaCachorro:
@@ -12,15 +12,6 @@ class TelaCachorro:
         vacina_aplicada = str(input('Quais vacinas o seu cachorro já recebeu: '))
         data_aplicacao = str(input('Quais as datas da aplicação das vacinas: '))
         return [porte, numero_chip, nome, raca, vacina_aplicada, data_aplicacao]
-
-        '''
-        cont = 0
-        while len(vacina_aplicada) != len(data_aplicacao) and cont < 3:
-            vacina_aplicada = 
-            vacina_aplicada = [vacina.strip() for vacina in vacina_aplicada.split(',')]
-            data_aplicacao = str(input('Quais as datas da aplicação das vacinas? Digite os valores separados por vírgula'))
-            data_aplicacao = [data.strip() for data in data_aplicacao.split(',')]
-        '''
 
     def porte_cachorro(self) -> int:
         print('Qual o porte do cachorro?')

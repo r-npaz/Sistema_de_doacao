@@ -1,6 +1,5 @@
-from gato import Gato
-from telaGato import TelaGato
-from controleMovimentacao import ControleMovimentacao
+from entidade.gato import Gato
+from limite.telaGato import TelaGato
 
 
 class ControleGato:

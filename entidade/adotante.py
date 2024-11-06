@@ -11,13 +11,13 @@ class TipoHabitacao(Enum):
         outro = 5
 
 class Adotante(Pessoa):
-    def __init__(self, tipo_habitacao: TipoHabitacao, tem_animais: bool, 
+    def __init__(self, tipo_habitacao: int, tem_animais: bool, 
                  nome: str, cpf: str, data_nascimento: str, endereco: str,):
         super().__init__(nome, cpf, data_nascimento, endereco)
         self.__tipo_habitacao = None
         self.__tem_animais = None
-        if isinstance(tipo_habitacao, TipoHabitacao):
-            self.__tipo_habitacao = tipo_habitacao
+        if isinstance(tipo_habitacao, int):
+            self.__tipo_habitacao = TipoHabitacao(tipo_habitacao) if tipo_habitacao in TipoHabitacao._value2member_map_ else None
         if isinstance(tem_animais, bool):
             self.__tem_animais = tem_animais
         self.__termo_responsabilidade = False
@@ -28,9 +28,9 @@ class Adotante(Pessoa):
         return self.__tipo_habitacao
 
     @tipo_habitacao.setter
-    def tipo_habitacao(self, tipo_habitacao: TipoHabitacao):
-        if isinstance(tipo_habitacao, TipoHabitacao):
-            self.__tipo_habitacao = tipo_habitacao
+    def tipo_habitacao(self, tipo_habitacao: int):
+        if isinstance(tipo_habitacao, int):
+            self.__tipo_habitacao = TipoHabitacao(tipo_habitacao) if tipo_habitacao in TipoHabitacao._value2member_map_ else None
 
     @property
     def tem_animais(self) -> bool:
@@ -45,10 +45,9 @@ class Adotante(Pessoa):
     def termo_responsabilidade(self) -> bool:
         return self.__termo_responsabilidade
 
-    @termo_responsabilidade.setter
-    def assinar_termo_responsabilidade(self):
-        if self.__termo_responsabilidade != False:
-            self.__termo_responsabilidade = True
+    def assinar_termo_responsabilidade(self, termo: bool):
+        if isinstance(termo, bool):
+            self.__termo_responsabilidade = termo
             self.__data_termo_assinado = datetime.now()
 
     @property

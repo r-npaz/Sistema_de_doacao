@@ -1,11 +1,11 @@
-from adocao import Adocao
-from doacao import Doacao
-from controleAdotante import ControleAdotante
-from controleDoador import ControleDoador
-from controleCachorro import ControleCachorro
-from controleGato import ControleGato
-from telaInicial import TelaInicial
-from telaCadastro import TelaCadastro
+from entidade.adocao import Adocao
+from entidade.doacao import Doacao
+from controle.controleAdotante import ControleAdotante
+from controle.controleDoador import ControleDoador
+from controle.controleCachorro import ControleCachorro
+from controle.controleGato import ControleGato
+from limite.telaInicial import TelaInicial
+from limite.telaCadastro import TelaCadastro
 
 
 class ControleMovimentacao:
@@ -18,10 +18,6 @@ class ControleMovimentacao:
         self.__cachorro = ControleCachorro(self)
         self.__doacoes = []
         self.__adocoes = []
-
-        #Não consegui compreender o real necessidade de inicializar a tela aqui e pq não funciona 
-        #se eu chamar o metodo mostra_opcao_tela no metodo abre_tela_inicial
- 
     
     def iniciar(self):
         self.abre_tela_inicial()
@@ -103,15 +99,16 @@ class ControleMovimentacao:
                 print('O animal escolhido não tomou todas as vacinas')
                 return self.abre_tela_inicial()
 
-        if self.__adotante.termo_responsabilidade != True:
-            self.__adotante.assinar_termo_responsabilidade
-        
-        adocao = Adocao(self.__adotante.data_adocao, animal_escolhido, adotante, self.__adotante.termo_responsabilidade )
-        self.__adocoes.append(adocao)
-        self.__cachorro.remover_cachorro(animal_escolhido.numero_chip)
-        self.__gato.remover_gato(animal_escolhido.numero_chip)
-        return 'Adoção concluída'  
-
+        if self.__adotante.assinar_termo_responsabilidade(adotante.cpf):
+            adocao = Adocao(self.__adotante.data_adocao, animal_escolhido.numero_chip, adotante.cpf, self.__adotante.termo_responsabilidade )
+            self.__adocoes.append(adocao)
+            self.__cachorro.remover_cachorro(animal_escolhido.numero_chip)
+            self.__gato.remover_gato(animal_escolhido.numero_chip)
+            print('Adoção concluída com sucesso')
+            return True
+        print('Adoção não concluída')  
+        return False
+    
     def escolher_animal(self): #aqui talvez eu poderia add um parametro para não ficar em loop infinito
         tentativas = 3
         while tentativas > 0:

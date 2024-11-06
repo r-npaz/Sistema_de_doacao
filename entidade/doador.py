@@ -1,5 +1,4 @@
 from pessoa import Pessoa
-from doacao import Doacao
 
 
 class Doador(Pessoa):

@@ -1,4 +1,4 @@
-from controleGato import ControleGato
+from controle.controleGato import ControleGato
 
 
 class TelaGato:

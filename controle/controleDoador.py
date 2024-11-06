@@ -1,6 +1,5 @@
-from doador import Doador
-from telaDoador import TelaDoador
-from controleMovimentacao import ControleMovimentacao
+from entidade.doador import Doador
+from limite.telaDoador import TelaDoador
 
 
 class ControleDoador:

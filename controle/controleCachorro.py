@@ -1,6 +1,5 @@
-from cachorro import Cachorro
-from telaCachorro import TelaCachorro
-from controleMovimentacao import ControleMovimentacao
+from entidade.cachorro import Cachorro
+from limite.telaCachorro import TelaCachorro
 
 
 class ControleCachorro:

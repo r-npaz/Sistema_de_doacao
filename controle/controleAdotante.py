@@ -1,6 +1,5 @@
-from adotante import Adotante
-from telaAdotante import TelaAdotante
-from controleMovimentacao import ControleMovimentacao
+from entidade.adotante import Adotante
+from limite.telaAdotante import TelaAdotante
 from datetime import datetime
 
 
@@ -11,8 +10,7 @@ class ControleAdotante:
         self.__adotantes = []
 
     def cadastrar_adotante(self): 
-        cadastrar_adotante = self.abre_tela_adotante
-        #na hora que eu passo essa lista, estando na ordem correta, os paramentros serão associados?       
+        cadastrar_adotante = self.abre_tela_adotante     
         novo_adotante = Adotante(cadastrar_adotante)
         if self.buscar_adotante(novo_adotante.cpf):
             return 'Essa pessoa já tem cadastro'
@@ -35,10 +33,10 @@ class ControleAdotante:
     def assinar_termo_responsabilidade(self, cpf):
         adotante = self.buscar_adotante(cpf)
         if adotante:
-            adotante.assinar_termo_responsabilidade()
-            print('Termo assinado')
-        else:
-            print('Adotante não localizado')
+            termo = self.tela_termo
+            self.__adotante.assinar_termo_responsabilidade(termo)
+            return True
+        return False
 
     def termo_responsabilidade(self) -> bool:
         return self.__adotante.termo_responsabilidade()
@@ -46,7 +44,6 @@ class ControleAdotante:
     def data_adocao(self) -> str:
         return self.__adotante.data_assinatura
     
-        #um getter, por definição, pode receber algum parametro?
     def idade_atual(self, data_nascimento: str) -> int:
         data_nascimento = datetime.strptime(data_nascimento, '%d/%m/%Y')
         data_atual = datetime.now()
@@ -54,7 +51,13 @@ class ControleAdotante:
         if (data_atual.month, data_atual.day) < (data_nascimento.month, data_nascimento.day):
             idade -= 1
         return idade
-    
+
+    def tela_termo(self):
+        termo = self.__tela_adotante.termo_adocao()
+        return termo
+
     def abre_tela_adotante(self):
         adotante = self.__tela_adotante.mostrar_tela_cadastro()
         return adotante
+    
+
