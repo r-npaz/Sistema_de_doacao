@@ -1,4 +1,3 @@
-from controle.controleMovimentacao import ControleMovimentacao
 
 
 class TelaCadastro:

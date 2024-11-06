@@ -1,4 +1,3 @@
-from controle.controleCachorro import ControleCachorro
 
 
 class TelaCachorro:
@@ -7,7 +6,7 @@ class TelaCachorro:
         print('Cadastro do cachorro a ser doado')
         nome = str(input('Qual o nome do cachorro: '))
         raca = str(input('Qual a raça do cachorro: '))
-        porte = self.porte_cachorro
+        porte = self.porte_cachorro()
         numero_chip = str(input('Qual o número do chip de identificação: '))
         vacina_aplicada = str(input('Quais vacinas o seu cachorro já recebeu: '))
         data_aplicacao = str(input('Quais as datas da aplicação das vacinas: '))
@@ -33,4 +32,3 @@ class TelaCachorro:
                 print('Valor incorreto: Digite um valor numerico inteiro válido')
                 if inteiros_validos:
                     print('Valores válidos: ', inteiros_validos)
-
