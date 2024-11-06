@@ -10,12 +10,12 @@ from limite.telaCadastro import TelaCadastro
 
 class ControleMovimentacao:
     def __init__(self):
-        self.__tela_inicial = TelaInicial(self)
-        self.__tela_cadastro = TelaCadastro(self)
-        self.__adotante = ControleAdotante(self)
-        self.__doador = ControleDoador(self)
-        self.__gato = ControleGato(self)
-        self.__cachorro = ControleCachorro(self)
+        self.__tela_inicial = TelaInicial()
+        self.__tela_cadastro = TelaCadastro()
+        self.__adotante = ControleAdotante()
+        self.__doador = ControleDoador()
+        self.__gato = ControleGato()
+        self.__cachorro = ControleCachorro()
         self.__doacoes = []
         self.__adocoes = []
     

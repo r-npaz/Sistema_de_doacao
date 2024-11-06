@@ -5,8 +5,8 @@ from datetime import datetime
 
 class ControleAdotante:
     def __init__(self) -> None:
-        self.__tela_adotante = TelaAdotante(self)
-        self.__adotante = Adotante(self)
+        self.__tela_adotante = TelaAdotante()
+        self.__adotante = Adotante()
         self.__adotantes = []
 
     def cadastrar_adotante(self): 

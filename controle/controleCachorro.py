@@ -4,7 +4,7 @@ from limite.telaCachorro import TelaCachorro
 
 class ControleCachorro:
     def __init__(self) -> None:
-        self.__tela_cachorro = TelaCachorro(self)
+        self.__tela_cachorro = TelaCachorro()
         self.__cadastro_cachorros = []
         self.__vacinas_aplicadas = []
         
