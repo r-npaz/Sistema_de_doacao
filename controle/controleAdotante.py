@@ -6,7 +6,6 @@ from datetime import datetime
 class ControleAdotante:
     def __init__(self) -> None:
         self.__tela_adotante = TelaAdotante()
-        self.__adotante = Adotante()
         self.__adotantes = []
 
     def cadastrar_adotante(self): 
@@ -22,6 +21,7 @@ class ControleAdotante:
             if adotante.cpf == cpf:
                 return adotante
         return None
+    
     @property
     def listar_adotantes(self) -> list:
         return self.__adotantes
@@ -37,17 +37,17 @@ class ControleAdotante:
         adotante = self.buscar_adotante(cpf)
         if adotante:
             termo = self.__tela_adotante.termo_adocao()
-            self.__adotante.assinar_termo_responsabilidade(termo)
+            self.adotante.assinar_termo_responsabilidade(termo)
             return True
         return False
 
     @property
     def termo_responsabilidade(self) -> bool:
-        return self.__adotante.termo_responsabilidade()
+        return self.adotante.termo_responsabilidade()
     
     @property
     def data_adocao(self) -> str:
-        return self.__adotante.data_assinatura
+        return self.adotante.data_assinatura
     
     def idade_atual(self, data_nascimento: str) -> int:
         data_nascimento = datetime.strptime(data_nascimento, '%d/%m/%Y')
