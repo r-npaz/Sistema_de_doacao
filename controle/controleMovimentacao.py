@@ -10,12 +10,12 @@ from limite.telaCadastro import TelaCadastro
 
 class ControleMovimentacao:
     def __init__(self):
-        self.__tela_inicial = TelaInicial(self)
-        self.__tela_cadastro = TelaCadastro(self)
-        self.__adotante = ControleAdotante
-        self.__doador = ControleDoador
-        self.__gato = ControleGato
-        self.__cachorro = ControleCachorro
+        self.__tela_inicial = TelaInicial()
+        self.__tela_cadastro = TelaCadastro()
+        self.__adotante = ControleAdotante()
+        self.__doador = ControleDoador()
+        self.__gato = ControleGato()
+        self.__cachorro = ControleCachorro()
         self.__doacoes = []
         self.__adocoes = []
     
@@ -63,6 +63,12 @@ class ControleMovimentacao:
         return False
     
     @property
+    def listar_doadores(self) -> str:
+        doadores = self.__doador.listar_doadores()
+        for doador in doadores:
+            print(f'Doadores: Nome {doador.nome} - CPF {doador.cpf}')
+
+    @property
     def buscar_doacoes(self) -> list:
         return self.__doacoes
     
@@ -99,8 +105,10 @@ class ControleMovimentacao:
                 print('O animal escolhido não tomou todas as vacinas')
                 return self.abre_tela_inicial()
 
-        if self.__adotante.assinar_termo_responsabilidade(adotante.cpf):
-            adocao = Adocao(self.__adotante.data_adocao, animal_escolhido.numero_chip, adotante.cpf, self.__adotante.termo_responsabilidade )
+        if self.assinar_termo_responsabilidade(adotante.cpf):
+            data_adocao = self.__adotante.data_adocao
+            termo = self.__adotante.termo_responsabilidade
+            adocao = Adocao(data_adocao, animal_escolhido.numero_chip, adotante.cpf, termo)
             self.__adocoes.append(adocao)
             self.__cachorro.remover_cachorro(animal_escolhido.numero_chip)
             self.__gato.remover_gato(animal_escolhido.numero_chip)
@@ -109,7 +117,11 @@ class ControleMovimentacao:
         print('Adoção não concluída')  
         return False
     
-    def escolher_animal(self): #aqui talvez eu poderia add um parametro para não ficar em loop infinito
+    def assinar_termo_responsabilidade(self, adotante_cpf):
+        adotante = self.__adotante.assinar_termo_responsabilidade(adotante_cpf)
+        return adotante
+
+    def escolher_animal(self):
         tentativas = 3
         while tentativas > 0:
             self.listar_animais_disponiveis()
@@ -131,22 +143,40 @@ class ControleMovimentacao:
             opcao = self.__tela_cadastro.opcao_doar()
             funcao_escolhida = animal_doado[opcao]
             funcao_escolhida()
-
-    def listar_adotantes(self):
-        pass
-
-    def listar_doadores(self):
-        pass
+    @property
+    def listar_adotantes(self) -> str:
+        adotantes = self.__adotante.listar_adotantes()
+        for adotante in adotantes:
+            print(f'Adotante = Nome {adotante.nome} - CPF{adotante.cpf}')
+        return self.abre_tela_inicial()
+    
+    @property
+    def listar_doadores(self) -> str:
+        doadores = self.__doador.listar_doadores()
+        for doador in doadores:
+            print(f'Doador = Nome {doador.nome} - CPF{doador.cpf}')
+        return self.abre_tela_inicial()
 
     def listar_animais_disponiveis(self):
         self.__cachorro.listar_cachorros()
         self.__gato.listar_gatos()
-        
-    def listar_animais_adotados(self):
-        pass
 
-    def listar_animais_doados(self):
-        pass
+    @property 
+    def listar_doacoes(self) -> str:
+        inicio, fim= self.__tela_inicial.periodo()
+        doacoes = self.__doacoes
+        for doacao in doacoes:
+            if (doacao.data_doacao >= inicio) and (doacao.data_doacao <= fim):
+                print(f'Doação feita em {doacao.data_doacao}, por {doacao.doador}, '
+                      f'do animal {doacao.animal_doado} pelo motivo {doacao.motivo}')
+      
+    def listar_adocoes(self):
+        inicio, fim = self.__tela_inicial.periodo()
+        adocoes = self.__doacoes
+        for adocao in adocoes:
+            if (adocao.data_adocao >= inicio) and (adocao.data_adocao <= fim):
+                print(f'Adoção feita em {adocao.data_adocao}, por {adocao.adotante}, '
+                      f'do animal {adocao.animal_escolhido}')
 
     def vacinar(self, numero_chip, vacina, data_aplicacao):
         if self.__gato.buscar_gato(numero_chip):
@@ -165,7 +195,8 @@ class ControleMovimentacao:
     def abre_tela_inicial(self):
         opcao_escolhida = {0: self.finalizar, 1: self.cadastrar, 2: self.doar, 3: self.adotar, 4: self.incluir_animal, 
                            5: self.listar_adotantes, 6: self.listar_doadores, 7: self.listar_animais_disponiveis,
-                           8: self.listar_animais_adotados, 9: self.vacinar_animal}
+                           8: self.listar_animais_adotados, 9: self.vacinar_animal, 10: self.listar_doacoes,
+                           11: self.listar_adocoes}
         while True:
             opcao = self.__tela_inicial.mostra_tela_opcoes()
             funcao_escolhida = opcao_escolhida[opcao]

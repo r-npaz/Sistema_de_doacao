@@ -10,8 +10,8 @@ class ControleAdotante:
         self.__adotantes = []
 
     def cadastrar_adotante(self): 
-        cadastrar_adotante = self.abre_tela_adotante     
-        novo_adotante = Adotante(cadastrar_adotante)
+        cadastrar_adotante = self.abre_tela_adotante()     
+        novo_adotante = Adotante(cadastrar_adotante[0], cadastrar_adotante[1], cadastrar_adotante[2], cadastrar_adotante[3], cadastrar_adotante[4], cadastrar_adotante[5])
         if self.buscar_adotante(novo_adotante.cpf):
             return 'Essa pessoa já tem cadastro'
         self.__adotantes.append(novo_adotante)
@@ -22,6 +22,9 @@ class ControleAdotante:
             if adotante.cpf == cpf:
                 return adotante
         return None
+    @property
+    def listar_adotantes(self) -> list:
+        return self.__adotantes
 
     def excluir_adoante(self, cpf: str):
         for adotante in self.__adotantes:
@@ -33,14 +36,16 @@ class ControleAdotante:
     def assinar_termo_responsabilidade(self, cpf):
         adotante = self.buscar_adotante(cpf)
         if adotante:
-            termo = self.tela_termo
+            termo = self.__tela_adotante.termo_adocao()
             self.__adotante.assinar_termo_responsabilidade(termo)
             return True
         return False
 
+    @property
     def termo_responsabilidade(self) -> bool:
         return self.__adotante.termo_responsabilidade()
     
+    @property
     def data_adocao(self) -> str:
         return self.__adotante.data_assinatura
     

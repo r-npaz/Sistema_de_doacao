@@ -4,13 +4,13 @@ from limite.telaGato import TelaGato
 
 class ControleGato:
     def __init__(self) -> None:
-        self.__tela_gato = TelaGato
+        self.__tela_gato = TelaGato()
         self.__gatos = []
         self.__vacinas_aplicadas = []
 
     def cadastrar_gato(self):
         cadastrar_gato = self.__tela_gato.cadastrar_gato
-        novo_gato = Gato(cadastrar_gato)
+        novo_gato = Gato(cadastrar_gato[0], cadastrar_gato[1], cadastrar_gato[2], cadastrar_gato[3], cadastrar_gato[4])
         if self.buscar_gato(novo_gato.numero_chip):
             print('Esse gato já foi cadastrado')
             return True
@@ -19,8 +19,7 @@ class ControleGato:
         return novo_gato
     
     def listar_gatos(self) -> str:
-        for gato in self.__gatos:
-            print(f'Gato nome: {gato.nome} - ID: {gato.numero_chip}')
+        return self.__gatos
 
     def buscar_gato(self, numero_chip: str) -> Gato:
         for gato in self.__gatos:

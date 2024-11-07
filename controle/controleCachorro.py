@@ -9,8 +9,8 @@ class ControleCachorro:
         self.__vacinas_aplicadas = []
         
     def cadastrar_cachorro(self):
-        cadastrar_cachorro = self.__tela_cachorro.cadastrar_cachorro
-        novo_cachorro = Cachorro(cadastrar_cachorro)
+        cadastrar_cachorro = self.__tela_cachorro.cadastrar_cachorro()
+        novo_cachorro = Cachorro(cadastrar_cachorro[0], cadastrar_cachorro[1], cadastrar_cachorro[2], cadastrar_cachorro[3], cadastrar_cachorro[4], cadastrar_cachorro[5])
         if self.buscar_cachorro(novo_cachorro.numero_chip):
             print('Esse cachorro já foi cadastrado')
             return True
@@ -30,9 +30,8 @@ class ControleCachorro:
                 self.__cadastro_cachorros.pop(cachorro)
                 print('Cachorro removido da lista de adoção')
     
-    def listar_cachorros(self) -> list:
-        for cachorro in self.__cadastros_cachorros:
-            print(f'Cachorro nome: {cachorro.nome} - ID: {cachorro.numero_chip}')
+    def listar_cachorros(self) -> str:
+        return self.__cadastro_cachorros
 
     def vacinar(self, numero_chip, vacina, data_aplicacao):
         vacina_tomada = self.cachorro.aplicar_vacina_cachorro(numero_chip, vacina, data_aplicacao)
