@@ -73,16 +73,16 @@ class ControleMovimentacao:
 
     def adotar(self):
         adotante_cpf = str(input('entre com o seu CPF: '))
-        adotante = self.controleAdotante.buscar_adotante(adotante_cpf)
+        adotante = controleadotante.buscar_adotante(adotante_cpf)
         if not adotante:
             print('Você não está cadastrado')
-            return self.controleAdotante.cadastrar_adotante()
+            return controleadotanbte.cadastrar_adotante()
         
-        if not self.controleAdotante.idade_atual(adotante.data_nascimento) > 18:
+        if not controleadotante.idade_atual(adotante.data_nascimento) > 18:
             print('Você não pode adotar um animal, é menor de 18 anos')
             return self.abre_tela_inicial()
         
-        if self.controleDoador.buscar_doador(adotante.cpf):
+        if controledoador.buscar_doador(adotante.cpf):
             print('você não pode adotar um animal, pois já doou um animal')
             return self.abre_tela_inicial()
         
@@ -91,28 +91,28 @@ class ControleMovimentacao:
             if (animal_escolhido.porte == 'PorteCachorro.grande') and (adotante.tipo_habitacao == 'TipoHabitacao.apartamento_pequeno'):
                 print('Esse animal não é compativel com o tamanho da sua habitação')
                 return self.abre_tela_inicial()
-            if not self.controleCachorro.verificar_vacinas(animal_escolhido.numero_chip):
+            if not controlecachorro.verificar_vacinas(animal_escolhido.numero_chip):
                 print('O animal escolhido não tomou todas as vacinas')
                 return self.abre_tela_inicial()
         else:
-            if not self.controleGato.verificar_vacinas(animal_escolhido.numero_chip):
+            if not controlegato.verificar_vacinas(animal_escolhido.numero_chip):
                 print('O animal escolhido não tomou todas as vacinas')
                 return self.abre_tela_inicial()
 
         if self.assinar_termo_responsabilidade(adotante.cpf):
-            data_adocao = self.controleAdotante.data_adocao
-            termo = self.controleAdotante.termo_responsabilidade
+            data_adocao = controleadotante.data_adocao
+            termo = controleadotante.termo_responsabilidade
             adocao = Adocao(data_adocao, animal_escolhido.numero_chip, adotante.cpf, termo)
             self.__adocoes.append(adocao)
-            self.controleCachorro.remover_cachorro(animal_escolhido.numero_chip)
-            self.controleGato.remover_gato(animal_escolhido.numero_chip)
+            controlecachorro.remover_cachorro(animal_escolhido.numero_chip)
+            controlegato.remover_gato(animal_escolhido.numero_chip)
             print('Adoção concluída com sucesso')
             return True
         print('Adoção não concluída')  
         return False
     
     def assinar_termo_responsabilidade(self, adotante_cpf):
-        adotante = self.controleAdotante.assinar_termo_responsabilidade(adotante_cpf)
+        adotante = controleadotante.assinar_termo_responsabilidade(adotante_cpf)
         return adotante
 
     def escolher_animal(self):
@@ -120,10 +120,10 @@ class ControleMovimentacao:
         while tentativas > 0:
             self.listar_animais_disponiveis()
             animal_escolhido = input('Qual o nome do animal que você quer adotar? ')
-            cachorro = self.controleCachorro.buscar_cachorro(animal_escolhido)
+            cachorro = controlecachorro.buscar_cachorro(animal_escolhido)
             if cachorro:
                 return cachorro
-            gato = self.controleGato.buscar_gato(animal_escolhido)
+            gato = controlegato.buscar_gato(animal_escolhido)
             if gato:
                 return gato
             print('Animal não encontrado. Tente novamente.')
@@ -132,28 +132,28 @@ class ControleMovimentacao:
         return None
 
     def incluir_animal(self):
-        animal_doado = {1: self.controleCachorro.cadastrar_cachorro, 2: self.controleGato.cadastrar_gato}
+        animal_doado = {1: controlecachorro.cadastrar_cachorro, 2: controlegato.cadastrar_gato}
         while True:
             opcao = self.__tela_cadastro.opcao_doar()
             funcao_escolhida = animal_doado[opcao]
             funcao_escolhida()
     @property
     def listar_adotantes(self) -> str:
-        adotantes = self.controleAdotante.listar_adotantes()
+        adotantes = controleadotante.listar_adotantes()
         for adotante in adotantes:
             print(f'Adotante = Nome {adotante.nome} - CPF{adotante.cpf}')
         return self.abre_tela_inicial()
     
     @property
     def listar_doadores(self) -> str:
-        doadores = self.controleDoador.listar_doadores()
+        doadores = controledoador.listar_doadores()
         for doador in doadores:
             print(f'Doador = Nome {doador.nome} - CPF{doador.cpf}')
         return self.abre_tela_inicial()
 
     def listar_animais_disponiveis(self):
-        self.controleCachorro.listar_cachorros()
-        self.controleGato.listar_gatos()
+        controlecachorro.listar_cachorros()
+        controlegato.listar_gatos()
 
     @property 
     def listar_doacoes(self) -> str:
@@ -173,7 +173,7 @@ class ControleMovimentacao:
                       f'do animal {adocao.animal_escolhido}')
 
     def vacinar(self, numero_chip, vacina, data_aplicacao):
-        if self.controleGato.buscar_gato(numero_chip):
+        if controlegato.buscar_gato(numero_chip):
             self.controleGato.vacinar(numero_chip, vacina, data_aplicacao)
             return f'Vacina aplicada ao {numero_chip}'
         else:

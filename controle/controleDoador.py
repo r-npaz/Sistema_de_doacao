@@ -29,7 +29,7 @@ class ControleDoador:
     def excluir_adotante(self, cpf: str):
         for doador in self.__doadores:
             if doador.cpf == cpf:
-                self.__doadores.pop(doador)
+                self.__doadores.remove(doador)
                 return f'Doador: {doador.cpf} - {doador.nome} excluido!'
         return False
         

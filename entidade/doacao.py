@@ -1,7 +1,7 @@
 
 
 class Doacao:
-    def __init__(self, data_doacao: str, animal_doado: str, doador: str, motivo: str) -> None:
+    def __init__(self, data_doacao: str, animal_doado: str, doador: str, motivo: str):
         self.__data_doacao = None
         self.__animal_doado = None
         self.__doador = None

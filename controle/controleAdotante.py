@@ -29,25 +29,28 @@ class ControleAdotante:
     def excluir_adoante(self, cpf: str):
         for adotante in self.__adotantes:
             if adotante.cpf == cpf:
-                self.__adotantes.pop(adotante)
+                self.__adotantes.remove(adotante)
                 return f'Adotante: {adotante.cpf} - {adotante.nome} removido!' 
         return False 
 
-    def assinar_termo_responsabilidade(self, cpf):
+    def assinar_termo_responsabilidade(self, cpf: str):
         adotante = self.buscar_adotante(cpf)
         if adotante:
             termo = self.__tela_adotante.termo_adocao()
-            self.adotante.assinar_termo_responsabilidade(termo)
+            adotante.assinar_termo_responsabilidade(termo)
             return True
         return False
 
-    @property
-    def termo_responsabilidade(self) -> bool:
-        return self.adotante.termo_responsabilidade()
+    def termo_responsabilidade(self, cpf: str):
+        adotante = self.buscar_adotante(cpf)
+        if adotante:
+            return adotante.termo_responsabilidade()
     
-    @property
-    def data_adocao(self) -> str:
-        return self.adotante.data_assinatura
+    
+    def data_adocao(self, cpf:str):
+        adotante = self.buscar_adotante(cpf)
+        if adotante:
+            return adotante.data_assinatura()
     
     def idade_atual(self, data_nascimento: str) -> int:
         data_nascimento = datetime.strptime(data_nascimento, '%d/%m/%Y')

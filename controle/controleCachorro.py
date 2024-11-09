@@ -34,7 +34,7 @@ class ControleCachorro:
         return self.__cadastro_cachorros
 
     def vacinar(self, numero_chip, vacina, data_aplicacao):
-        vacina_tomada = self.cachorro.aplicar_vacina_cachorro(numero_chip, vacina, data_aplicacao)
+        vacina_tomada = cachorro.aplicar_vacina_cachorro(numero_chip, vacina, data_aplicacao)
         self.__vacinas_aplicadas.append(vacina_tomada)
 
     def historico_vacina(self, numero_chip: str) -> list:

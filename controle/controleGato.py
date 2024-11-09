@@ -30,11 +30,11 @@ class ControleGato:
     def remover_gato(self, numero_chip: str):
         for gato in self.__gatos:
             if gato.numero_chip == numero_chip:
-                self.___gatos.pop(gato)
+                self.___gatos.remove(gato)
                 print('Gato removido da lista de adoção')
         
     def vacinar(self, numero_chip, vacina, data_aplicacao):
-        vacina_tomada = self.gato.aplicar_vacina_gato(numero_chip, vacina, data_aplicacao)
+        vacina_tomada = gato.aplicar_vacina_gato(numero_chip, vacina, data_aplicacao)
         self.__vacinas_aplicadas.append(vacina_tomada)
 
     def historico_vacina(self, numero_chip: str) -> list:
