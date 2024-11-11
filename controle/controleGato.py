@@ -34,7 +34,7 @@ class ControleGato:
                 print('Gato removido da lista de adoção')
         
     def vacinar(self, numero_chip, vacina, data_aplicacao):
-        vacina_tomada = gato.aplicar_vacina_gato(numero_chip, vacina, data_aplicacao)
+        vacina_tomada = Gato.aplicar_vacina_gato(numero_chip, vacina, data_aplicacao)
         self.__vacinas_aplicadas.append(vacina_tomada)
 
     def historico_vacina(self, numero_chip: str) -> list:
