@@ -17,7 +17,7 @@ class TelaCachorro:
         print('1  -  pequeno')
         print('2  -  médio')
         print('3  -  grande')
-        opcao = self.le_num_inteiro(input('Entre com o número que representa o tamanho do seu cachorro: '), [1, 2, 3])
+        opcao = self.le_num_inteiro(('Entre com o número que representa o tamanho do seu cachorro: '), [1, 2, 3])
         return opcao
 
     def le_num_inteiro(self, mensagem: str = '', inteiros_validos: list = None):

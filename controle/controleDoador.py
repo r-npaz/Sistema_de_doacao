@@ -9,11 +9,15 @@ class ControleDoador:
             self.__doadores = []
    
     def cadastrar_doador(self):
-        cadastrar_doador = self.__tela_doador
-        novo_doador = Doador(cadastrar_doador[0], cadastrar_doador[1], cadastrar_doador[2], cadastrar_doador[3]) #seria uma boa pratica eu verificar se já existe antes de criar?
-        if self.buscar_doador(novo_doador.cpf):
-            return True
+        cadastrar_doador = self.tela_doador()
+        novo_doador = Doador(cadastrar_doador[0], cadastrar_doador[1], cadastrar_doador[2], cadastrar_doador[3])
+        
+        if self.buscar_doador(novo_doador.cpf) is not None:
+            print('Essa pessoa já tem cadastro')
+            return novo_doador
+
         self.__doadores.append(novo_doador)
+        print(f"Doador {novo_doador.nome} cadastrado com sucesso!")
         return novo_doador
     
     def buscar_doador(self, cpf: str) -> Doador:

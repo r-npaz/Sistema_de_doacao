@@ -9,13 +9,15 @@ class ControleGato:
         self.__vacinas_aplicadas = []
 
     def cadastrar_gato(self):
-        cadastrar_gato = self.__tela_gato.cadastrar_gato
-        novo_gato = Gato(cadastrar_gato[0], cadastrar_gato[1], cadastrar_gato[2], cadastrar_gato[3], cadastrar_gato[4])
-        if self.buscar_gato(novo_gato.numero_chip):
-            print('Esse gato já foi cadastrado')
-            return True
+        numero_chip, nome, raca, vacina_aplicada, data_aplicacao = self.__tela_gato.cadastrar_gato()
+        novo_gato = Gato(numero_chip, nome, raca, vacina_aplicada, data_aplicacao)
+        
+        if self.buscar_gato(novo_gato.numero_chip) is not None:
+            print('ALERTA: Esse gato já foi cadastrado!')
+            return novo_gato
+        
         self.__gatos.append(novo_gato)
-        print('gato cadastrado')
+        print(f'Gato {novo_gato.nome} cadastrado!')
         return novo_gato
     
     def listar_gatos(self) -> str:
@@ -25,12 +27,12 @@ class ControleGato:
         for gato in self.__gatos:
             if gato.numero_chip == numero_chip:
                 return gato
-            return 'Gato não localizado'
+            return None
 
     def remover_gato(self, numero_chip: str):
         for gato in self.__gatos:
             if gato.numero_chip == numero_chip:
-                self.___gatos.remove(gato)
+                self.__gatos.remove(gato)
                 print('Gato removido da lista de adoção')
         
     def vacinar(self, numero_chip, vacina, data_aplicacao):

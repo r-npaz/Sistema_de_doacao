@@ -12,6 +12,10 @@ class ControleMovimentacao:
     def __init__(self):
         self.__tela_inicial = TelaInicial()
         self.__tela_cadastro = TelaCadastro()
+        self.__adotante = ControleAdotante()
+        self.__doador = ControleDoador()
+        self.__cachorro = ControleCachorro()
+        self.__gato = ControleGato()
         self.__doacoes = []
         self.__adocoes = []
     
@@ -23,34 +27,28 @@ class ControleMovimentacao:
         exit()
     
     def cadastrar(self):
-        opcao_escolhida = {1: self.controleAdotante.cadastrar_adotante, 2: self.controleDoador.cadastrar_doador}
-        while True:
-            opcao = self.__tela_cadastro.opcao_cadastro()
-            funcao_escolhida = opcao_escolhida[opcao]
-            funcao_escolhida() 
+        opcao_escolhida = {1: self.__adotante.cadastrar_adotante, 2: self.__doador.cadastrar_doador}
+        opcao = self.__tela_cadastro.opcao_cadastro()
+        funcao_escolhida = opcao_escolhida[opcao]
+        return funcao_escolhida() 
 
     def doar(self):
         animal = self.incluir_animal()
-        if animal:
-            print('Esse animal já foi doado uma vez')
-            return self.abre_tela_inicial()
-        print('Animal cadastrado com sucesso!')
-        doador = self.controleDoador.cadastrar_doador()
+        doador = self.__doador.cadastrar_doador()
+        data, motivo = self.__tela_cadastro.dados_doacao()
+        doacao = Doacao(data, animal.numero_chip, doador.cpf, motivo)
 
-        if doador:
-            print('Essa pessoa já possui cadastro')
-            return self.abre_tela_inicial()
-        print('Cadastro realizado com sucesso!')
-        dados_doacao = self.__tela_cadastro.dados_doacao()
-        doacao = Doacao(dados_doacao[0], animal, doador, dados_doacao[1])
-
-        if  self.__doacoes.inserir_doacao(doacao):
-            return 'Doacao realizada'
-        return 'Doação não concluida' 
+        if self.buscar_doacao_repetida(doacao.doador, doacao.animal_doado):
+            print(f'Doacao {doacao.doador} - {doacao.animal_doado} já realizada')
+            return self.abre_tela_inicial
+        
+        self.__doacoes.append(doacao)
+        print(f'Doacao {doacao.doador} - {doacao.animal_doado} concluida')
+        return self.abre_tela_inicial 
      
     def buscar_doacao_repetida(self, cpf: str, numero_chip):
         for doacao in self.__doacoes:
-            if (doacao.doador.cpf == cpf) and (doacao.animal.numero_chip == numero_chip):
+            if (doacao.doador == cpf) and (doacao.animal_doado == numero_chip):
                 return True
         return False
     
@@ -132,31 +130,30 @@ class ControleMovimentacao:
         return None
 
     def incluir_animal(self):
-        animal_doado = {1: ControleCachorro.cadastrar_cachorro, 2: ControleGato.cadastrar_gato}
-        while True:
-            opcao = self.__tela_cadastro.opcao_doar()
-            funcao_escolhida = animal_doado[opcao]
-            funcao_escolhida()
-    @property
+        animal_doado = {1: self.__cachorro.cadastrar_cachorro, 2: self.__gato.cadastrar_gato}
+        opcao = self.__tela_cadastro.opcao_doar()
+        funcao_escolhida = animal_doado[opcao]
+        return funcao_escolhida()
+        
     def listar_adotantes(self) -> str:
         adotantes = ControleAdotante.listar_adotantes()
         for adotante in adotantes:
             print(f'Adotante = Nome {adotante.nome} - CPF{adotante.cpf}')
         return self.abre_tela_inicial()
     
-    @property
+    
     def listar_doadores(self) -> str:
         doadores = ControleDoador.listar_doadores()
         for doador in doadores:
             print(f'Doador = Nome {doador.nome} - CPF{doador.cpf}')
         return self.abre_tela_inicial()
 
-    @property
+    
     def listar_animais_disponiveis(self):
         ControleCachorro.listar_cachorros()
         ControleGato.listar_gatos()
 
-    @property 
+    
     def listar_doacoes(self) -> str:
         inicio, fim= self.__tela_inicial.periodo()
         doacoes = self.__doacoes
@@ -165,7 +162,7 @@ class ControleMovimentacao:
                 print(f'Doação feita em {doacao.data_doacao}, por {doacao.doador}, '
                       f'do animal {doacao.animal_doado} pelo motivo {doacao.motivo}')
     
-    @property
+    
     def listar_adocoes(self):
         inicio, fim = self.__tela_inicial.periodo()
         adocoes = self.__adocoes
@@ -174,7 +171,7 @@ class ControleMovimentacao:
                 print(f'Adoção feita em {adocao.data_adocao}, por {adocao.adotante}, '
                       f'do animal {adocao.animal_escolhido}')
 
-    @property            
+               
     def listar_animais_adotados(self) -> str:
         animais_adotados = self.__adocoes
         for animal in animais_adotados:

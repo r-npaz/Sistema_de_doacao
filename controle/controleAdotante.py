@@ -1,4 +1,5 @@
 from entidade.adotante import Adotante
+from entidade.adotante import TipoHabitacao
 from limite.telaAdotante import TelaAdotante
 from datetime import datetime
 
@@ -8,13 +9,20 @@ class ControleAdotante:
         self.__tela_adotante = TelaAdotante()
         self.__adotantes = []
 
-    def cadastrar_adotante(self): 
-        cadastrar_adotante = self.abre_tela_adotante()     
-        novo_adotante = Adotante(cadastrar_adotante[0], cadastrar_adotante[1], cadastrar_adotante[2], cadastrar_adotante[3], cadastrar_adotante[4], cadastrar_adotante[5])
-        if self.buscar_adotante(novo_adotante.cpf):
-            return 'Essa pessoa já tem cadastro'
+    def cadastrar_adotante(self):
+        cadastrar_adotante = self.abre_tela_adotante()
+        tipo_habitacao = TipoHabitacao(cadastrar_adotante[0])
+        tem_animais = True if cadastrar_adotante[1] == 'S' else False  
+        novo_adotante = Adotante(tipo_habitacao, tem_animais, cadastrar_adotante[2], 
+                                 cadastrar_adotante[3], cadastrar_adotante[4], cadastrar_adotante[5])
+        
+        if self.buscar_adotante(novo_adotante.cpf) is not None:
+            print('Essa pessoa já tem cadastro')
+            return None
+        
         self.__adotantes.append(novo_adotante)
-        return 'Cadastro realizado com sucesso!'
+        print(f"Adotante {novo_adotante.nome} cadastrado com sucesso!")
+        return novo_adotante
 
     def buscar_adotante(self, cpf: str) -> Adotante:
         for adotante in self.__adotantes:
@@ -66,6 +74,7 @@ class ControleAdotante:
 
     def abre_tela_adotante(self):
         adotante = self.__tela_adotante.mostrar_tela_cadastro()
+        print(adotante)
         return adotante
     
 
