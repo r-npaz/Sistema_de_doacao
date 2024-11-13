@@ -42,7 +42,7 @@ class TelaInicial:
         vacina = self.le_num_inteiro('Qual a vacina aplicada: ', [1, 2, 3])
         numero_chip = str(input('Qual a ID do animal: '))
         data_aplicacao = str(input('Qual a data de aplicação: '))
-        return [numero_chip, vacina, data_aplicacao]
+        return numero_chip, vacina, data_aplicacao
 
     def periodo(self) -> str:
         while True:

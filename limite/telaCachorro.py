@@ -8,9 +8,8 @@ class TelaCachorro:
         raca = str(input('Qual a raça do cachorro: '))
         porte = self.porte_cachorro()
         numero_chip = str(input('Qual o número do chip de identificação: '))
-        vacina_aplicada = str(input('Quais vacinas o seu cachorro já recebeu: '))
-        data_aplicacao = str(input('Quais as datas da aplicação das vacinas: '))
-        return [porte, numero_chip, nome, raca, vacina_aplicada, data_aplicacao]
+        vacinas = self.vacina()
+        return porte, numero_chip, nome, raca, vacinas
 
     def porte_cachorro(self) -> int:
         print('Qual o porte do cachorro?')
@@ -19,6 +18,25 @@ class TelaCachorro:
         print('3  -  grande')
         opcao = self.le_num_inteiro(('Entre com o número que representa o tamanho do seu cachorro: '), [1, 2, 3])
         return opcao
+    
+    def vacina (self) -> list:
+        vacinas = []
+        while True:
+            print('Quais as vacinas que seu animal já tomou?')
+            print('1  -  Vacina de Raiva')
+            print('2  -  Vacina Leptospirose')
+            print('3  -  Vacina de Hepatite Infecciosa')
+            vacina = self.le_num_inteiro('Qual a vacina aplicada: ', [1, 2, 3])
+            data_aplicacao = str(input('Qual a data de aplicação: '))
+            vacinas.append((vacina, data_aplicacao))
+            continuar = input('Continuar cadastrando vacina? S/N: ').upper()
+            if continuar == 'N':
+                break
+
+            elif continuar != 'S':
+                print('Valor incorreto: Digite S ou N')
+
+        return vacinas
 
     def le_num_inteiro(self, mensagem: str = '', inteiros_validos: list = None):
         while True:

@@ -8,18 +8,16 @@ class Animal(ABC):
         self.__numero_chip = None
         self.__nome = None
         self.__raca = None
-        self.__vacina_aplicada = None
-        self.__data_aplicacao = None
+        self.__vacina = None
         if isinstance(numero_chip, str):
             self.__numero_chip = numero_chip
         if isinstance(nome, str):
             self.__nome = nome
         if isinstance(raca, str):
             self.__raca = raca
-        if isinstance(vacina_aplicada, str):
-            self.__vacina_aplicada = vacina_aplicada
-        if isinstance(data_aplicacao, str):
-            self.__data_aplicacao = data_aplicacao
+        if vacina_aplicada and data_aplicacao:
+            if isinstance(vacina_aplicada, str) and isinstance(data_aplicacao, str):
+                self.__vacina = Vacina(numero_chip, vacina_aplicada, data_aplicacao)
 
     @property
     def numero_chip(self) -> str:
@@ -38,15 +36,22 @@ class Animal(ABC):
     def nome(self, nome: str):
         if isinstance(nome, str):
             self.__nome = nome
+    
+    @property
+    def vacina(self) -> Vacina:
+        return self.__vacina
+
+    @vacina.setter
+    def vacina(self, vacina: Vacina):
+        if isinstance(vacina, Vacina):
+            self.__vacina = vacina
 
     @property
     def raca(self):
         return self.__raca
 
-    def aplicar_vacina(self, numero_chip: str, vacina_aplicada: int, data_aplicacao: str):
-        if isinstance(numero_chip, str):
-            if isinstance(vacina_aplicada, int):
-                if isinstance(data_aplicacao, str):
-                    vacina = Vacina(numero_chip, vacina_aplicada, data_aplicacao)
-                    return vacina
-        return False
+    def aplicar_vacina(self, animal, vacina_aplicada: int, data_aplicacao: str):
+        if isinstance(animal, Animal) and isinstance(vacina_aplicada, int) and isinstance(data_aplicacao, str):
+            self.__vacina = Vacina(animal, vacina_aplicada, data_aplicacao)
+            return self.__vacina
+        return None

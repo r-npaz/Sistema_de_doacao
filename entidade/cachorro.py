@@ -20,7 +20,7 @@ class Cachorro(Animal):
     def porte(self, porte: int):
         if isinstance(porte, int) and porte in PorteCachorro._value2member_map_:
             self.__porte = PorteCachorro(porte)
-
-    def aplicar_vacina_cachorro(self, numero_chip, vacina, data_aplicacao):
-        return self.aplicar_vacina(numero_chip, vacina, data_aplicacao)
+   
+    def aplicar_vacina(self, animal: Animal, vacina_aplicada: int, data_aplicacao: str):
+        return super().aplicar_vacina(animal, vacina_aplicada, data_aplicacao)
         

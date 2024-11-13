@@ -43,21 +43,19 @@ class ControleAdotante:
 
     def assinar_termo_responsabilidade(self, cpf: str):
         adotante = self.buscar_adotante(cpf)
-        if adotante:
+        if adotante is not None:
             termo = self.__tela_adotante.termo_adocao()
             adotante.assinar_termo_responsabilidade(termo)
-            return True
-        return False
+            return termo
 
     def termo_responsabilidade(self, cpf: str):
         adotante = self.buscar_adotante(cpf)
-        if adotante:
+        if adotante is not None:
             return adotante.termo_responsabilidade()
-    
     
     def data_adocao(self, cpf:str):
         adotante = self.buscar_adotante(cpf)
-        if adotante:
+        if adotante is not None:
             return adotante.data_assinatura()
     
     def idade_atual(self, data_nascimento: str) -> int:

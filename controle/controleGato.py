@@ -9,8 +9,11 @@ class ControleGato:
         self.__vacinas_aplicadas = []
 
     def cadastrar_gato(self):
-        numero_chip, nome, raca, vacina_aplicada, data_aplicacao = self.__tela_gato.cadastrar_gato()
-        novo_gato = Gato(numero_chip, nome, raca, vacina_aplicada, data_aplicacao)
+        numero_chip, nome, raca, vacinas = self.__tela_gato.cadastrar_gato()
+        novo_gato = Gato(numero_chip, nome, raca)
+        if vacinas is not None and len(vacinas) > 0:
+            for vacina, data in vacinas.items(): 
+                self.vacinar(novo_gato, vacina, data)
         
         if self.buscar_gato(novo_gato.numero_chip) is not None:
             print('ALERTA: Esse gato já foi cadastrado!')
@@ -35,21 +38,21 @@ class ControleGato:
                 self.__gatos.remove(gato)
                 print('Gato removido da lista de adoção')
         
-    def vacinar(self, numero_chip, vacina, data_aplicacao):
-        vacina_tomada = Gato.aplicar_vacina_gato(numero_chip, vacina, data_aplicacao)
+    def vacinar(self, gato: Gato, vacina: str, data_aplicacao: str):
+        vacina_tomada = Gato.aplicar_vacina(gato, vacina, data_aplicacao)
         self.__vacinas_aplicadas.append(vacina_tomada)
 
     def historico_vacina(self, numero_chip: str) -> list:
-        vacinas = [vacina for vacina in self.__vacinas_aplicadas if vacina.numero_chip == numero_chip]
+        vacinas = [vacina for vacina in self.__vacinas_aplicadas if vacina.gato.numero_chip == numero_chip]
         return vacinas
 
-    def verificar_vacinas(self):
+    def verificar_vacinas(self, numero_chip: str):
         vacinas_necessarias = ['VacinasNecessarias.raiva', 'VacinasNecessarias.leptospirose', 'VacinasNecessarias.hepatite_infecciosa']
-        vacinas = self.historico_vacina()
+        vacinas = self.historico_vacina(numero_chip)
         aplicadas = 0
         for vacina in vacinas:
             for vacina_necessaria in vacinas_necessarias:
                 if vacina == vacina_necessaria:
                     aplicadas += 1
-        if aplicadas == 3: return True 
+        if aplicadas >= 3: return True 
         return False 
