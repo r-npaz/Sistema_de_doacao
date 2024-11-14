@@ -12,7 +12,8 @@ class ControleGato:
         numero_chip, nome, raca, vacinas = self.__tela_gato.cadastrar_gato()
         novo_gato = Gato(numero_chip, nome, raca)
         if vacinas is not None and len(vacinas) > 0:
-            for vacina, data in vacinas.items(): 
+            for vacina, data in vacinas.items():
+                print(vacina, data, novo_gato)
                 self.vacinar(novo_gato, vacina, data)
         
         if self.buscar_gato(novo_gato.numero_chip) is not None:
@@ -30,7 +31,7 @@ class ControleGato:
         for gato in self.__gatos:
             if gato.numero_chip == numero_chip:
                 return gato
-            return None
+        return None
 
     def remover_gato(self, numero_chip: str):
         for gato in self.__gatos:
@@ -38,8 +39,9 @@ class ControleGato:
                 self.__gatos.remove(gato)
                 print('Gato removido da lista de adoção')
         
-    def vacinar(self, gato: Gato, vacina: str, data_aplicacao: str):
-        vacina_tomada = Gato.aplicar_vacina(gato, vacina, data_aplicacao)
+    def vacinar(self, gato: Gato, vacina: int, data_aplicacao: str):
+        print('entramos no metodo vacinar')
+        vacina_tomada = gato.aplicar_vacina(vacina, data_aplicacao)
         self.__vacinas_aplicadas.append(vacina_tomada)
 
     def historico_vacina(self, numero_chip: str) -> list:

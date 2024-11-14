@@ -11,7 +11,7 @@ class TelaGato:
         return numero_chip, nome, raca, vacinas
     
     def vacina (self) -> list:
-        vacinas = []
+        vacinas = {}
         while True:
             print('Quais as vacinas que seu animal já tomou?')
             print('1  -  Vacina de Raiva')
@@ -20,16 +20,17 @@ class TelaGato:
             print('0  -  Nenhuma')
             vacina = self.le_num_inteiro('Qual a vacina aplicada: ', [1, 2, 3, 0])
             if vacina == 0:
+                print(vacinas)
                 return vacinas
             data_aplicacao = str(input('Qual a data de aplicação: '))
-            vacinas.append((vacina, data_aplicacao))
+            vacinas[vacina] = data_aplicacao
             continuar = input('Continuar cadastrando vacina? S/N: ').upper()
             if continuar == 'N':
                 break
 
             elif continuar != 'S':
                 print('Valor incorreto: Digite S ou N')
-                
+        print(vacinas)     
         return vacinas
 
     def le_num_inteiro(self, mensagem: str = '', inteiros_validos: list = None):

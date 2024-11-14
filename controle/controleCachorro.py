@@ -39,7 +39,7 @@ class ControleCachorro:
     def listar_cachorros(self) -> str:
         return self.__cadastro_cachorros
 
-    def vacinar(self, cachorro: Cachorro, vacina, data_aplicacao):
+    def vacinar(self, cachorro: Cachorro, vacina: int, data_aplicacao: str):
         vacina_tomada = Cachorro.aplicar_vacina(cachorro, vacina, data_aplicacao)
         self.__vacinas_aplicadas.append(vacina_tomada)
 
@@ -47,16 +47,17 @@ class ControleCachorro:
         vacinas = [vacina for vacina in self.__vacinas_aplicadas if vacina.cachorro.numero_chip == numero_chip]
         return vacinas
 
-    def verificar_vacinas(self):
+    def verificar_vacinas(self, numero_chip: str):
         vacinas_necessarias = ['VacinasNecessarias.raiva', 'VacinasNecessarias.leptospirose', 'VacinasNecessarias.hepatite_infecciosa']
-        vacinas = self.historico_vacina()
+        vacinas = self.historico_vacina(numero_chip)
+        vacinas_aplicadas = [vacina.vacina_aplicada for vacina in vacinas]
+
         aplicadas = 0
-        for vacina in vacinas:
-            for vacina_necessaria in vacinas_necessarias:
-                if vacina == vacina_necessaria:
-                    aplicadas += 1
-        if aplicadas >= 3: return True 
-        return False 
+        for vacina_necessaria in vacinas_necessarias:
+            if vacina_necessaria in vacinas_aplicadas:
+                aplicadas += 1
+        
+        return aplicadas >= 3
 
 
 

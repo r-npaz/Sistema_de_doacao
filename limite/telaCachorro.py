@@ -20,15 +20,18 @@ class TelaCachorro:
         return opcao
     
     def vacina (self) -> list:
-        vacinas = []
+        vacinas = {}
         while True:
             print('Quais as vacinas que seu animal já tomou?')
             print('1  -  Vacina de Raiva')
             print('2  -  Vacina Leptospirose')
             print('3  -  Vacina de Hepatite Infecciosa')
-            vacina = self.le_num_inteiro('Qual a vacina aplicada: ', [1, 2, 3])
+            print('0  -  Nenhuma')
+            vacina = self.le_num_inteiro('Qual a vacina aplicada: ', [1, 2, 3, 0])
+            if vacina == 0:
+                return vacinas
             data_aplicacao = str(input('Qual a data de aplicação: '))
-            vacinas.append((vacina, data_aplicacao))
+            vacinas[vacina] = data_aplicacao
             continuar = input('Continuar cadastrando vacina? S/N: ').upper()
             if continuar == 'N':
                 break
